@@ -3,7 +3,7 @@ package com.primeira.appSpring.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="usuario")
+@Table(name="usuario", schema = "hotel")
 public class M_Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +11,8 @@ public class M_Usuario {
     private String usuario;
     private String apelido;
     private String senha;
+    private String telefone;
+    private String cpf;
 
     public Long getId() {
         return id;
@@ -42,5 +44,21 @@ public class M_Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

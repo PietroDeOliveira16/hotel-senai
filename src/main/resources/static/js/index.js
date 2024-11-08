@@ -15,3 +15,23 @@ function logout(){
     });
 }
 $("#btnLogout").click(logout);
+
+function atualizarCampos(element){
+    let tipo = element.dataset.tipo;
+    let espaco = element.dataset.espaco;
+    let solteiro = element.dataset.solteiro;
+    let casal = element.dataset.casal;
+    let banheiros = element.dataset.banheiros;
+
+    $.ajax({
+        url: "locacao/cadastro",
+        method: "post",
+        data:{
+            tipo: tipo,
+            espaco: espaco,
+            solteiro: solteiro,
+            casal: casal,
+            banheiros: banheiros
+        }
+    })
+}
