@@ -23,7 +23,5 @@ public class S_Home {
         return r_usuario.findAll();
     }
 
-    public static List<M_Quarto> getQuartos(){
-        return r_quarto.findAll();
-    }
+
 }

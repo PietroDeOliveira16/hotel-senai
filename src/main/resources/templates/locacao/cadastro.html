@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!--CUSTOMS-->
     <script src="/js/index.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Hoteis SENAI</title>
 </head>
 <body>
@@ -49,34 +50,42 @@
         </div>
     </div>
 </nav>
-<hr>
 <div class="container">
+    <hr>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+        <p th:text="${mensagemSucesso}"></p>
+    </div>
+
+    <!-- Exibe mensagem de erro -->
+    <div th:if="${mensagemErro}" class="alert alert-danger">
+        <p th:text="${mensagemErro}"></p>
+    </div>
+    <form action="/locar" method="post">
     <div class="row">
         <div class="col-3">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Quarto</label>
-                <select onchange="atualizarCampos(this)" class="form-select" id="inputGroupSelect01">
+                <select name="numero_quarto" onchange="atualizarCampos(this)" class="form-select" id="inputGroupSelect01">
+                    <option selected>Selecione o quarto</option>
                     <option th:each="quarto : ${quartos}"
                             th:value="${quarto.numero_quarto}"
-                            th:text="${quarto.numero_quarto} + ' - ' + ${quarto.tipo}"
-                            th:attr="data-tipo=${quarto.tipo}, data-espaco=${quarto.espaco_pessoas},
-                            data-solteiro=${quarto.camas_solteiro}, data-casal=${quarto.camas_casal},
-                            data-banheiros=${quarto.banheiros}"></option>
+                            th:text="${quarto.numero_quarto} + ' - ' + ${quarto.tipo}">
+                    </option>
                 </select>
             </div>
         </div>
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spCheckIn">Data Check-In</span>
-                <input type="datetime-local" class="form-control"
+                <input name="data_checkIn" type="datetime-local" class="form-control"
                        th:value="${currentDate}"
-                       aria-label="CheckIn" aria-describedby="spCheckIn">
+                       aria-label="CheckIn" aria-describedby="spCheckIn" readonly>
             </div>
         </div>
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spCheckOut">Data Check-Out</span>
-                <input type="datetime-local" class="form-control" aria-label="CheckIn" aria-describedby="spCheckIn">
+                <input name="data_checkOut" type="datetime-local" class="form-control" aria-label="CheckIn" aria-describedby="spCheckIn">
             </div>
         </div>
         <hr>
@@ -86,13 +95,13 @@
         <div class="col-3">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spTipo">Tipo Quarto</span>
-                <input type="text" class="form-control" placeholder="Tipo" aria-label="Username" aria-describedby="spTipo">
+                <input readonly id="inputTipo" type="text" class="form-control" placeholder="Tipo" aria-label="Username" aria-describedby="spTipo">
             </div>
         </div>
         <div class="col-2">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spEspaco">Espaco</span>
-                <input type="text" class="form-control" placeholder="Espaco" aria-label="Espaco" aria-describedby="spEspaco">
+                <input readonly id="inputEspaco" type="text" class="form-control" placeholder="Espaco" aria-label="Espaco" aria-describedby="spEspaco">
             </div>
         </div>
         <div class="col-12">
@@ -101,13 +110,13 @@
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spSolteiro">Solteiro</span>
-                <input type="text" class="form-control" placeholder="Qtd. camas solteiro" aria-label="Espaco" aria-describedby="spSolteiro">
+                <input readonly id="inputSolteiro" type="text" class="form-control" placeholder="Qtd. camas solteiro" aria-label="Espaco" aria-describedby="spSolteiro">
             </div>
         </div>
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spCasal">Casal</span>
-                <input type="text" class="form-control" placeholder="Qtd. camas casal" aria-label="Espaco" aria-describedby="spCasal">
+                <input readonly id="inputCasal" type="text" class="form-control" placeholder="Qtd. camas casal" aria-label="Espaco" aria-describedby="spCasal">
             </div>
         </div>
         <div class="col-4"></div>
@@ -120,21 +129,47 @@
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spBanheiros">Banheiros</span>
-                <input type="text" class="form-control" placeholder="Qtd. banheiros" aria-label="Espaco" aria-describedby="spBanheiros">
+                <input readonly id="inputBanheiros" type="text" class="form-control" placeholder="Qtd. banheiros" aria-label="Espaco" aria-describedby="spBanheiros">
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-8">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
+                <input disabled class="form-check-input" type="checkbox" id="inputCloset">
+                <label class="form-check-label" for="inputCloset">
                     Possui Closet
                 </label>
             </div>
         </div>
+        <hr>
+        <div class="col-12">
+            <label class="form-label">Lista de Hóspedes Adicionais</label>
+        </div>
+        <div class="col-4 mb-4">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    A list item
+                    <span class="badge text-bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    A second list item
+                    <span class="badge text-bg-primary rounded-pill">2</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    A third list item
+                    <span class="badge text-bg-primary rounded-pill">1</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+            <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <hr>
         <div class="col-12 text-start">
             <button type="submit" class="btn btn-success">Completar Locação</button>
         </div>
     </div>
+    </form>
 </div>
 </body>
 </html>

@@ -15,6 +15,9 @@ public class M_Locacao {
     private LocalDateTime check_in;
     private LocalDateTime check_out;
     private BigDecimal senha;
+    private long id_quarto;
+    private int num_quarto;
+    private long id_usuario;
 
     public long getId() {
         return id;
@@ -46,5 +49,29 @@ public class M_Locacao {
 
     public void setSenha(BigDecimal senha) {
         this.senha = senha;
+    }
+
+    public long getId_quarto() {
+        return id_quarto;
+    }
+
+    public void setId_quarto(long id_quarto) {
+        this.id_quarto = id_quarto;
+    }
+
+    public int getNum_quarto() {
+        return num_quarto;
+    }
+
+    public void setNum_quarto(int num_quarto) {
+        this.num_quarto = num_quarto;
+    }
+
+    public long getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 }
