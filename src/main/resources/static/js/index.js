@@ -28,6 +28,7 @@ function atualizarCampos(select) {
                     // Preenchendo os campos de acordo com a resposta da API
                     document.getElementById('inputTipo').value = quarto.tipo;
                     document.getElementById('inputEspaco').value = quarto.espaco_pessoas;
+                    document.getElementById('inputPreco').value = quarto.preco;
                     document.getElementById('inputSolteiro').value = quarto.camas_solteiro;
                     document.getElementById('inputCasal').value = quarto.camas_casal;
                     document.getElementById('inputBanheiros').value = quarto.banheiros;
@@ -36,6 +37,7 @@ function atualizarCampos(select) {
                 error: function() {
                     document.getElementById('inputTipo').value = null;
                     document.getElementById('inputEspaco').value = null;
+                    document.getElementById('inputPreco').value = null;
                     document.getElementById('inputSolteiro').value = null;
                     document.getElementById('inputCasal').value = null;
                     document.getElementById('inputBanheiros').value = null;

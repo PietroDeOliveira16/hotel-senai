@@ -18,7 +18,7 @@ public class M_Quarto {
     private int camas_casal;
     private int banheiros;
     private boolean closet;
-    private boolean ocupado;
+    private BigDecimal preco;
 
     public long getId() {
         return id;
@@ -84,11 +84,11 @@ public class M_Quarto {
         this.closet = closet;
     }
 
-    public boolean isOcupado() {
-        return ocupado;
+    public BigDecimal getPreco() {
+        return preco;
     }
 
-    public void setOcupado(boolean ocupado) {
-        this.ocupado = ocupado;
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
     }
 }

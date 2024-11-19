@@ -18,6 +18,7 @@ public class M_Locacao {
     private long id_quarto;
     private int num_quarto;
     private long id_usuario;
+    private BigDecimal preco;
 
     public long getId() {
         return id;
@@ -73,5 +74,13 @@ public class M_Locacao {
 
     public void setId_usuario(long id_usuario) {
         this.id_usuario = id_usuario;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
     }
 }

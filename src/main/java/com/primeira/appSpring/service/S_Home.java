@@ -1,7 +1,5 @@
 package com.primeira.appSpring.service;
 
-import com.primeira.appSpring.model.M_Cliente;
-import com.primeira.appSpring.model.M_Quarto;
 import com.primeira.appSpring.model.M_Usuario;
 import com.primeira.appSpring.repository.R_Quarto;
 import com.primeira.appSpring.repository.R_Usuario;

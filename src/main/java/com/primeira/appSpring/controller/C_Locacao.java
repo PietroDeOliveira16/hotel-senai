@@ -2,11 +2,11 @@ package com.primeira.appSpring.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import com.primeira.appSpring.model.M_Locacao;
 import com.primeira.appSpring.model.M_Quarto;
 import com.primeira.appSpring.model.M_Usuario;
-import com.primeira.appSpring.service.S_Home;
 import com.primeira.appSpring.service.S_Locacao;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class C_Locacao {
         if(session.getAttribute("usuario") != null){
             // Passar a data formatada para o modelo
             model.addAttribute("currentDate", formattedDateNow());
-            model.addAttribute("quartos", S_Locacao.getQuartos());
+            model.addAttribute("quartos", S_Locacao.getQuartosDisponiveis());
             return "locacao/cadastro";
         }
         return "redirect:/";
@@ -38,7 +38,7 @@ public class C_Locacao {
     public String postLocacao(HttpSession session, Model model,
                               @RequestParam("numero_quarto") int numero_quarto,
                               @RequestParam("data_checkIn") LocalDateTime data_checkIn,
-                              @RequestParam("data_checkOut") LocalDateTime data_checkOut){
+                              @RequestParam(value = "data_checkOut", required = false) LocalDateTime data_checkOut){
 
         M_Usuario m_usuario = (M_Usuario) session.getAttribute("usuario");
         M_Quarto m_quarto = S_Locacao.acharQuarto(numero_quarto);
@@ -55,7 +55,7 @@ public class C_Locacao {
         }
 
         model.addAttribute("currentDate", formattedDateNow());
-        model.addAttribute("quartos", S_Locacao.getQuartos());
+        model.addAttribute("quartos", S_Locacao.getQuartosDisponiveis());
         // Retorne o nome do template que você quer renderizar
         return "locacao/cadastro";
     }

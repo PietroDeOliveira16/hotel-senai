@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -50,12 +51,17 @@ public class S_Locacao {
             m_locacao.setCheck_out(data_checkOut);
 
             Random random = new Random(System.nanoTime());
-            BigDecimal senha = BigDecimal.valueOf(random.nextInt(10000));
+            BigDecimal senha = BigDecimal.valueOf(random.nextInt(1000, 10000));
             while(isSenhaRepetida(senha)){
-                senha = BigDecimal.valueOf(random.nextInt(10000));
+                senha = BigDecimal.valueOf(random.nextInt(1000, 10000));
             }
             m_locacao.setSenha(senha);
             m_locacao.setId_quarto(id_quarto);
+
+            // Preço quarto normal = R$60,00
+            // Preço quarto luxo = R$179,90
+            m_locacao.setPreco(r_quarto.findByNumero(numero_quarto).getPreco());
+
             try {
                 return r_locacao.save(m_locacao);
             }catch (Exception e){}
@@ -69,7 +75,7 @@ public class S_Locacao {
         // existe em algum lugar) ou se o objeto esta null (a senha n existe)
     }
 
-    public static List<M_Quarto> getQuartos(){
-        return r_quarto.findAll();
+    public static List<M_Quarto> getQuartosDisponiveis(){
+        return r_quarto.findQuartosDisponiveis();
     }
 }
