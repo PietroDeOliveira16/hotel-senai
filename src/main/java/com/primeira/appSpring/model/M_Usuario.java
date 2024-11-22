@@ -13,6 +13,7 @@ public class M_Usuario {
     private String senha;
     private String telefone;
     private String cpf;
+    private String email;
 
     public Long getId() {
         return id;
@@ -60,5 +61,13 @@ public class M_Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

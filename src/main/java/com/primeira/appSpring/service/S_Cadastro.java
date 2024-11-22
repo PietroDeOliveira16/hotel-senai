@@ -13,7 +13,7 @@ public class S_Cadastro {
     }
 
     public static M_Usuario cadastrarUsuario(String usuario,
-                                      String apelido, String senha, String conf_senha, String telefone, String cpf){
+                                      String apelido, String senha, String conf_senha, String telefone, String cpf, String email){
         boolean podeSalvar = true;
 
         if (senha == null || !senha.trim().equals(conf_senha)){
@@ -31,6 +31,9 @@ public class S_Cadastro {
         if(cpf == null || cpf.trim().isEmpty()){
             podeSalvar = false;
         }
+        if(email == null || email.trim().isEmpty()){
+            podeSalvar = false;
+        }
 
         if(podeSalvar){
             M_Usuario m_usuario = new M_Usuario();
@@ -39,6 +42,7 @@ public class S_Cadastro {
             m_usuario.setSenha(senha);
             m_usuario.setTelefone(telefone);
             m_usuario.setCpf(cpf);
+            m_usuario.setEmail(email);
             return r_usuario.save(m_usuario);
         }
         return null;

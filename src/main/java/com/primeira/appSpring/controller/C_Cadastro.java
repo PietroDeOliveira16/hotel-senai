@@ -25,8 +25,9 @@ public class C_Cadastro {
                                @RequestParam("senha") String senha,
                                @RequestParam("conf_senha") String conf_senha,
                                @RequestParam("telefone") String telefone,
-                               @RequestParam("cpf") String cpf) {
-        M_Usuario m_usuario = S_Cadastro.cadastrarUsuario(usuario, apelido, senha, conf_senha, telefone, cpf);
+                               @RequestParam("cpf") String cpf,
+                               @RequestParam("email") String email) {
+        M_Usuario m_usuario = S_Cadastro.cadastrarUsuario(usuario, apelido, senha, conf_senha, telefone, cpf, email);
         if (m_usuario != null) {
             return "index";
         }

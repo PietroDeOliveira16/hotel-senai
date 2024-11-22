@@ -1,0 +1,17 @@
+<div class="row mb-4" th:each="locacao : ${locacoes}">
+    <div class="col-1"></div>
+    <div class="col-10" style="border: 2px solid black">
+        <p class="fs-4">Quarto <span th:text="${locacao.num_quarto}"></span></p>
+        <div class="row">
+            <div class="col-3">
+                <p class="fs-6">Check-in: <span th:text="${locacao.check_in}"></span></p>
+                <p class="fs-6">Check-out: <span th:text="${locacao.check_out}"></span></p>
+            </div>
+            <div class="col-3">
+                <p class="fs-6">Preço: <span th:text="${locacao.preco}"></span></p>
+                <p class="fs-6">Responsável: <span class="" th:text="${responsa}"></span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-1"></div>
+</div>

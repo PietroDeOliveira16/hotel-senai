@@ -46,18 +46,21 @@ public class C_Locacao {
             M_Locacao m_locacao= S_Locacao.realizarLocacao(numero_quarto, data_checkIn, data_checkOut,
                     m_usuario.getId(), m_quarto.getId());
             if (m_locacao != null) {
-                model.addAttribute("mensagemSucesso", "Quarto locado com sucesso!");
+                model.addAttribute("nmr_quarto", m_locacao.getNum_quarto());
+                model.addAttribute("email_user", ((M_Usuario) session.getAttribute("usuario")).getEmail());
+                return "locacao/sucesso";
             } else {
+                model.addAttribute("currentDate", formattedDateNow());
+                model.addAttribute("quartos", S_Locacao.getQuartosDisponiveis());
                 model.addAttribute("mensagemErro", "Erro ao locar o quarto");
+                return "locacao/cadastro";
             }
         } else {
+            model.addAttribute("currentDate", formattedDateNow());
+            model.addAttribute("quartos", S_Locacao.getQuartosDisponiveis());
             model.addAttribute("mensagemErro", "Usuário não autenticado");
+            return "locacao/cadastro";
         }
-
-        model.addAttribute("currentDate", formattedDateNow());
-        model.addAttribute("quartos", S_Locacao.getQuartosDisponiveis());
-        // Retorne o nome do template que você quer renderizar
-        return "locacao/cadastro";
     }
 
     private static String formattedDateNow(){

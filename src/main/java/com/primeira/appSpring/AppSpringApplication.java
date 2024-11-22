@@ -12,5 +12,4 @@ public class AppSpringApplication {
 		new ArduinoSerialCommunication();
 		ArduinoSerialCommunication.main(args);
 	}
-
 }
