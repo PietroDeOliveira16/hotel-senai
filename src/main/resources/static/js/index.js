@@ -47,5 +47,23 @@ function atualizarCampos(select) {
         }
 }
 
+function adicionarSelecaoQuartos(){
+    $.ajax({
+        url: '/selecquarto',
+        method: 'POST',
+        data:{
+            checkIn: $("#checkIn").val(),
+            checkOut: $("#checkOut").val()
+        },
+        success: function(response){
+            $(".row").append(response);
+        },
+        error: function(){
+            console.log("Erro: ", error);
+        }
+    })
+}
+$("#btnSelecQuartos").click(adicionarSelecaoQuartos);
+
 
 

@@ -12,30 +12,30 @@ public class S_Cadastro {
         this.r_usuario = r_usuario;
     }
 
-    public static M_Usuario cadastrarUsuario(String usuario,
-                                      String apelido, String senha, String conf_senha, String telefone, String cpf, String email){
+    public static M_Usuario cadastrarUsuario(String usuario, String apelido, String senha, String conf_senha,
+                                             String telefone, String cpf, String email) {
         boolean podeSalvar = true;
 
-        if (senha == null || !senha.trim().equals(conf_senha)){
+        if (senha == null || !senha.trim().equals(conf_senha)) {
             podeSalvar = false;
         }
-        if(usuario == null || usuario.trim().isEmpty()){
+        if (usuario == null || usuario.trim().isEmpty()) {
             podeSalvar = false;
         }
-        if(apelido == null || apelido.trim().isEmpty()){
+        if (apelido == null || apelido.trim().isEmpty()) {
             podeSalvar = false;
         }
-        if(telefone == null || telefone.trim().isEmpty()){
+        if (telefone == null || telefone.trim().isEmpty()) {
             podeSalvar = false;
         }
-        if(cpf == null || cpf.trim().isEmpty()){
+        if (cpf == null || cpf.trim().isEmpty()) {
             podeSalvar = false;
         }
-        if(email == null || email.trim().isEmpty()){
+        if (email == null || email.trim().isEmpty()) {
             podeSalvar = false;
         }
 
-        if(podeSalvar){
+        if (podeSalvar) {
             M_Usuario m_usuario = new M_Usuario();
             m_usuario.setUsuario(usuario);
             m_usuario.setApelido(apelido);

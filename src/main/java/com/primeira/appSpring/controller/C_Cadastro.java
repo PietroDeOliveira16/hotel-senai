@@ -15,7 +15,7 @@ public class C_Cadastro {
 
     //CADASTRO
     @GetMapping("/cadastro")
-    public String getCadastro(){
+    public String getCadastro() {
         return "cadastro/cadastro";
     }
 

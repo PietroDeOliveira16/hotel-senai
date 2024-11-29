@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class C_ValidaSenha {
-    public static String ChecarSenha(String senhaAtual){
-        if(!senhaAtual.isEmpty() && S_ValidaSenha.ValidaSenha(senhaAtual)){
+    public static String ChecarSenha(String senhaAtual) {
+        if (!senhaAtual.isEmpty() && S_ValidaSenha.ValidarSenha(senhaAtual)) {
             return "true";
         }
         return "false";

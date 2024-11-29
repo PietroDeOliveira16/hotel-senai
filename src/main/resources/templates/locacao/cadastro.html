@@ -23,17 +23,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Cadastro
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Locação</a></li>
+                        <li><a class="dropdown-item active" href="#">Locação</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Reserva</a></li>
                     </ul>
@@ -47,6 +47,8 @@
     </div>
 </nav>
 <div class="container">
+    <p class="fs-4">Observações</p>
+    <p class="fs-5 text-break">O check-in só é permitido a partir do meio dia (12:00). O check-out deve ser feito até as dez da manhã (10:00). </p>
     <hr>
     <div th:if="${mensagemSucesso}" class="alert alert-success">
         <p th:text="${mensagemSucesso}"></p>
@@ -62,7 +64,7 @@
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Quarto</label>
                 <select name="numero_quarto" onchange="atualizarCampos(this)" class="form-select" id="inputGroupSelect01">
-                    <option selected>Selecione o quarto</option>
+                    <option selected disabled>Selecione o quarto</option>
                     <option th:each="quarto : ${quartos}"
                             th:value="${quarto.numero_quarto}"
                             th:text="${quarto.numero_quarto} + ' - ' + ${quarto.tipo}">

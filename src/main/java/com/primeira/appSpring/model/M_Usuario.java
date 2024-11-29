@@ -3,7 +3,7 @@ package com.primeira.appSpring.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="usuario", schema = "hotel")
+@Table(name = "usuario", schema = "hotel")
 public class M_Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

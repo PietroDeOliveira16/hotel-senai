@@ -16,15 +16,15 @@ public class C_Login {
     @PostMapping("/")
     public String postLogin(@RequestParam("usuario") String usuario,
                             @RequestParam("senha") String senha,
-                            HttpSession session){
-        M_Usuario m_usuario = S_Login.validaLogin(usuario,senha);
+                            HttpSession session) {
+        M_Usuario m_usuario = S_Login.validaLogin(usuario, senha);
         session.setAttribute("usuario", m_usuario);
         return "redirect:/";
     }
 
     @GetMapping("/")
-    public String getLogin(HttpSession session, Model model){
-        if(session.getAttribute("usuario") != null){
+    public String getLogin(HttpSession session, Model model) {
+        if (session.getAttribute("usuario") != null) {
             model.addAttribute("locacoes", S_Home.getLocacoes(((M_Usuario) session.getAttribute("usuario")).getId()));
             return "home/home";
         }
@@ -33,7 +33,7 @@ public class C_Login {
 
     @GetMapping("/logout")
     @ResponseBody
-    public boolean getLogout(HttpSession session){
+    public boolean getLogout(HttpSession session) {
         session.setAttribute("usuario", null);
         return true;
     }
