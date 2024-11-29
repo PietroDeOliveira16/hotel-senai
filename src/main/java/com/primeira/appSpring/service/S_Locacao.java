@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -27,14 +28,14 @@ public class S_Locacao {
         return r_quarto.findByNumero(numero);
     }
 
-    public static M_Locacao realizarLocacao(int numero_quarto, LocalDateTime data_checkIn,
-                                            LocalDateTime data_checkOut, long id_usuario, long id_quarto) {
+    public static M_Locacao realizarLocacao(int numero_quarto, LocalDate data_checkIn,
+                                            LocalDate data_checkOut, long id_usuario, long id_quarto) {
         boolean podeLocar = true;
 
         if (numero_quarto <= 0) {
             podeLocar = false;
         }
-        if (data_checkIn == null || data_checkIn.isBefore(LocalDate.now().atStartOfDay())) {
+        if (data_checkIn == null || data_checkIn.isBefore(LocalDate.now())) {
             podeLocar = false;
         }
         if (data_checkOut == null || data_checkOut.isBefore(data_checkIn) || data_checkOut.isEqual(data_checkIn)) {
@@ -44,12 +45,15 @@ public class S_Locacao {
             podeLocar = false;
         }
 
+        LocalDateTime dataTimeCheckIn = data_checkIn.atTime(12, 0);
+        LocalDateTime dataTimeCheckOut = data_checkOut.atTime(10, 0);
+
         if (podeLocar) {
             M_Locacao m_locacao = new M_Locacao();
             m_locacao.setId_usuario(id_usuario);
             m_locacao.setNum_quarto(numero_quarto);
-            m_locacao.setCheck_in(data_checkIn);
-            m_locacao.setCheck_out(data_checkOut);
+            m_locacao.setCheck_in(dataTimeCheckIn);
+            m_locacao.setCheck_out(dataTimeCheckOut);
 
             Random random = new Random(System.nanoTime());
             BigDecimal senha = BigDecimal.valueOf(random.nextInt(1000, 10000));
@@ -58,9 +62,6 @@ public class S_Locacao {
             }
             m_locacao.setSenha(senha);
             m_locacao.setId_quarto(id_quarto);
-
-            // Preço quarto normal = R$60,00
-            // Preço quarto luxo = R$179,90
             m_locacao.setPreco(r_quarto.findByNumero(numero_quarto).getPreco());
 
             try {
@@ -79,5 +80,9 @@ public class S_Locacao {
 
     public static List<M_Quarto> getQuartosDisponiveis() {
         return r_quarto.findQuartosDisponiveis();
+    }
+
+    public static M_Locacao getLocacaoComCheckInCheckOut(LocalDate checkIn, LocalDate checkOut){
+        return r_locacao.findLocacaoInThisTime(checkIn, checkOut);
     }
 }
