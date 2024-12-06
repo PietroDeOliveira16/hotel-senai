@@ -48,15 +48,17 @@ function atualizarCampos(select) {
 }
 
 function adicionarSelecaoQuartos(){
+    $(".row .campo").remove();
     $.ajax({
-        url: '/selecquarto',
+        url: '/buscarQuartos',
         method: 'POST',
         data:{
             checkIn: $("#checkIn").val(),
             checkOut: $("#checkOut").val()
         },
         success: function(response){
-            $(".row").append(response);
+            let div = $(response).addClass('campo');
+            $(".row").append(div);
         },
         error: function(){
             console.log("Erro: ", error);
@@ -64,6 +66,11 @@ function adicionarSelecaoQuartos(){
     })
 }
 $("#btnSelecQuartos").click(adicionarSelecaoQuartos);
+
+$('.datepicker').datepicker({
+    autoclose: true,
+    startDate: 'd'
+});
 
 
 

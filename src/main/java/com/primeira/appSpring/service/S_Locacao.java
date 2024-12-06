@@ -4,6 +4,7 @@ import com.primeira.appSpring.model.M_Locacao;
 import com.primeira.appSpring.model.M_Quarto;
 import com.primeira.appSpring.repository.R_Locacao;
 import com.primeira.appSpring.repository.R_Quarto;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -72,12 +73,16 @@ public class S_Locacao {
         return null;
     }
 
+    /*public static List<M_Quarto> getQuartosNestaData(){
+        return r_quarto
+    }*/
+
     private static boolean isSenhaRepetida(BigDecimal senha) {
         return r_locacao.findBySenha(senha).isPresent(); // verifica se o objeto retornado possui campos preenchidos (a senha ja
         // existe em algum lugar) ou se o objeto esta null (a senha n existe)
     }
 
-    public static List<M_Quarto> getQuartosDisponiveis() {
-        return r_quarto.findQuartosDisponiveis();
+    public static List<M_Quarto> getQuartosDisponiveis(LocalDateTime dataCheckIn, LocalDateTime dataCheckOut) {
+        return r_quarto.findQuartosDisponiveis(dataCheckIn, dataCheckOut);
     }
 }

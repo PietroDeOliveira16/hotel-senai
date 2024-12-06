@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +19,10 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
     Optional<M_Locacao> findBySenha(@Param("senha") BigDecimal senha); // retorna um objeto null caso não encontre uma linha
     // com senha repetida
 
-    @Query(value = "select * from hotel.status_locacao where id_usuario = :id_usuario and is_active = true", nativeQuery = true)
+    @Query(value = "select * from hotel.locacao l where id_usuario = :id_usuario and " +
+            "l.check_out >= CURRENT_DATE ", nativeQuery = true)
     List<M_Locacao> findByUserId(@Param("id_usuario") Long id);
 
     @Query(value = "select * from hotel.status_locacao where :checkOut is between check_in and check_out or :checkIn is between check_in and check_out or :checkIn = check_in or :checkOut = check_out", nativeQuery = true)
-    M_Locacao findLocacaoInThisTime(@Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut);
+    M_Locacao findLocacaoInThisTime(@Param("checkIn") LocalDateTime checkIn, @Param("checkOut") LocalDateTime checkOut);
 }
