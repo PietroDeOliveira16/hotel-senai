@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!--CUSTOMS-->
     <script src="/js/index.js" defer></script>
+    <script src="/js/locacao.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Hoteis SENAI</title>
 </head>
@@ -25,21 +26,13 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Cadastro
+                        Hospedagem
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#">Locação</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Reserva</a></li>
+                        <li><a class="dropdown-item active" href="#">Locações e Reservas</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
             <a class="btn btn-danger" id="btnLogout">Logout</a>
@@ -50,30 +43,31 @@
     <p class="fs-4">Observações</p>
     <p class="fs-5 text-break">O check-in só é permitido a partir do meio dia (12:00). O check-out deve ser feito até as dez da manhã (10:00). </p>
     <hr>
-    <div th:if="${mensagemSucesso}" class="alert alert-success">
-        <p th:text="${mensagemSucesso}"></p>
-    </div>
-
     <!-- Exibe mensagem de erro -->
     <div th:if="${mensagemErro}" class="alert alert-danger">
         <p th:text="${mensagemErro}"></p>
     </div>
+
     <form action="/locar" method="post">
     <div class="row">
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spCheckIn">Data Check-In</span>
                 <input id="checkIn" name="data_checkIn" data-date-startDate="d" type="date" class="form-control datepicker"
+                       aria-label="CheckIn" aria-describedby="spCheckIn"
                        th:value="${currentDate}"
-                       aria-label="CheckIn" aria-describedby="spCheckIn">
+                       th:min="${currentDate}"
+                >
             </div>
         </div>
         <div class="col-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="spCheckOut">Data Check-Out</span>
                 <input id="checkOut" name="data_checkOut" data-date-startDate="+1d" type="date" class="form-control datepicker" aria-label="CheckOut"
+                       aria-describedby="spCheckOut"
                        th:value="${tomorrowDate}"
-                       aria-describedby="spCheckOut">
+                       th:min="${tomorrowDate}"
+                >
             </div>
         </div>
         <div class="col-4">

@@ -15,10 +15,10 @@ public class S_ValidaSenha {
         this.r_locacao = r_locacao;
     }
 
-    public static boolean ValidarSenha(String senhaRecebida){
-        BigDecimal bigDecimal = new BigDecimal(senhaRecebida);
-        Optional<M_Locacao> m_locacao = r_locacao.findBySenha(bigDecimal);
-        if(m_locacao.isPresent()){
+    public static boolean ValidarSenha(String senhaRecebida) {
+        int senha = Integer.parseInt(senhaRecebida);
+        Optional<M_Locacao> m_locacao = r_locacao.findIfSenhaIsCorrect(senha);
+        if (m_locacao.isPresent()) {
             return true;
         }
         return false;

@@ -14,11 +14,13 @@ public class M_Locacao {
     private long id;
     private LocalDateTime check_in;
     private LocalDateTime check_out;
-    private BigDecimal senha;
+    private int senha;
     private long id_quarto;
     private int num_quarto;
     private long id_usuario;
-    private BigDecimal preco;
+    private BigDecimal diaria;
+    private long dias_estadia;
+    private BigDecimal preco_total;
 
     public long getId() {
         return id;
@@ -44,11 +46,11 @@ public class M_Locacao {
         this.check_out = check_out;
     }
 
-    public BigDecimal getSenha() {
+    public int getSenha() {
         return senha;
     }
 
-    public void setSenha(BigDecimal senha) {
+    public void setSenha(int senha) {
         this.senha = senha;
     }
 
@@ -76,11 +78,27 @@ public class M_Locacao {
         this.id_usuario = id_usuario;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
+    public BigDecimal getDiaria() {
+        return diaria;
     }
 
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
+    public void setDiaria(BigDecimal diaria) {
+        this.diaria = diaria;
+    }
+
+    public long getDias_estadia() {
+        return dias_estadia;
+    }
+
+    public void setDias_estadia(long dias_estadia) {
+        this.dias_estadia = dias_estadia;
+    }
+
+    public BigDecimal getPreco_total() {
+        return preco_total;
+    }
+
+    public void setPreco_total(BigDecimal preco_total) {
+        this.preco_total = preco_total;
     }
 }

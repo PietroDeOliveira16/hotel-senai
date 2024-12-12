@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 import com.primeira.appSpring.model.M_Locacao;
 import com.primeira.appSpring.model.M_Quarto;
+import com.primeira.appSpring.model.M_Resposta;
 import com.primeira.appSpring.model.M_Usuario;
 import com.primeira.appSpring.service.S_Locacao;
 import jakarta.servlet.http.HttpSession;
@@ -51,6 +53,9 @@ public class C_Locacao {
 
         LocalDateTime checkIn = data_checkIn.atTime(12, 0);
         LocalDateTime checkOut = data_checkOut.atTime(10, 0);
+
+        long quantidadeDias = ChronoUnit.DAYS.between(data_checkIn, data_checkOut);
+
         LocalDate hoje = LocalDate.now();
 
         M_Usuario m_usuario = (M_Usuario) session.getAttribute("usuario");
@@ -58,30 +63,27 @@ public class C_Locacao {
         model.addAttribute("currentDate", hoje);
         model.addAttribute("tomorrowDate", hoje.plusDays(1));
         if (m_usuario != null) {
-            M_Locacao m_locacao = S_Locacao.realizarLocacao(numero_quarto, checkIn, checkOut,
-                    m_usuario.getId(), m_quarto.getId());
-            if (m_locacao != null) {
-                model.addAttribute("num_quarto", m_locacao.getNum_quarto());
+            M_Resposta m_respostaLocacao = S_Locacao.realizarLocacao(numero_quarto, checkIn, checkOut,
+                    m_usuario.getId(), m_quarto.getId(), quantidadeDias);
+            if(m_respostaLocacao.isSucesso()){
+                model.addAttribute("num_quarto", m_respostaLocacao.getM_locacao().getNum_quarto());
                 model.addAttribute("email_user", ((M_Usuario) session.getAttribute("usuario")).getEmail());
                 return "locacao/sucesso";
-            } else {
-
-                model.addAttribute("mensagemErro", "Erro ao locar o quarto");
+            }else{
+                model.addAttribute("currentDate", hoje);
+                model.addAttribute("tomorrowDate", hoje.plusDays(1));
+                model.addAttribute("mensagemErro", m_respostaLocacao.getMensagem());
                 return "locacao/cadastro";
             }
         } else {
-            model.addAttribute("currentDate", hoje);
-            model.addAttribute("tomorrowDate", hoje.plusDays(1));
-            //model.addAttribute("quartos", S_Locacao.getQuartosDisponiveis());
-            model.addAttribute("mensagemErro", "Usuário não autenticado");
-            return "locacao/cadastro";
+            return "redirect:/";
         }
     }
 
     @PostMapping("/buscarQuartos")
     public String postBusca(HttpSession session, Model model,
                             @RequestParam("checkIn") String data_checkIn,
-                            @RequestParam("checkOut") String data_checkOut){
+                            @RequestParam("checkOut") String data_checkOut) {
 
         data_checkIn += " 12:00";
         data_checkOut += " 10:00";
@@ -89,8 +91,15 @@ public class C_Locacao {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime checkIn = LocalDateTime.parse(data_checkIn, formatter);
         LocalDateTime checkOut = LocalDateTime.parse(data_checkOut, formatter);
+
+        LocalDate dateCheckIn = checkIn.toLocalDate();
+        LocalDate dateCheckOut = checkOut.toLocalDate();
+
+        long quantidadeDias = ChronoUnit.DAYS.between(dateCheckIn, dateCheckOut);
+
         List<M_Quarto> quartos = S_Locacao.getQuartosDisponiveis(checkIn, checkOut);
         model.addAttribute("quartos", quartos);
+        model.addAttribute("qtdDias", quantidadeDias);
         return "/locacao/pv/quarto";
     }
 }

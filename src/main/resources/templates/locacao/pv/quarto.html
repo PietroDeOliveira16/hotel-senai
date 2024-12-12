@@ -19,19 +19,22 @@
 <div class="col-3">
     <div class="input-group mb-3">
         <span class="input-group-text" id="spTipo">Tipo Quarto</span>
-        <input readonly id="inputTipo" type="text" class="form-control" placeholder="Tipo" aria-label="Username" aria-describedby="spTipo">
+        <input readonly id="inputTipo" type="text" class="form-control" placeholder="Tipo" aria-label="Username"
+               aria-describedby="spTipo">
     </div>
 </div>
 <div class="col-2">
     <div class="input-group mb-3">
         <span class="input-group-text" id="spEspaco">Espaco</span>
-        <input readonly id="inputEspaco" type="text" class="form-control" placeholder="Espaco" aria-label="Espaco" aria-describedby="spEspaco">
+        <input readonly id="inputEspaco" type="text" class="form-control" placeholder="Espaco" aria-label="Espaco"
+               aria-describedby="spEspaco">
     </div>
 </div>
 <div class="col-3">
     <div class="input-group mb-3">
-        <span class="input-group-text" id="spPreco">Preço (R$)</span>
-        <input readonly id="inputPreco" type="text" class="form-control" placeholder="Preço" aria-label="Preço" aria-describedby="spPreco">
+        <span class="input-group-text" id="spPreco">Preço Diária (R$)</span>
+        <input readonly id="inputPreco" type="text" class="form-control" placeholder="Preço" aria-label="Preço"
+               aria-describedby="spPreco">
     </div>
 </div>
 <div class="col-12">
@@ -40,13 +43,15 @@
 <div class="col-4">
     <div class="input-group mb-3">
         <span class="input-group-text" id="spSolteiro">Solteiro</span>
-        <input readonly id="inputSolteiro" type="text" class="form-control" placeholder="Qtd. camas solteiro" aria-label="Espaco" aria-describedby="spSolteiro">
+        <input readonly id="inputSolteiro" type="text" class="form-control" placeholder="Qtd. camas solteiro"
+               aria-label="Espaco" aria-describedby="spSolteiro">
     </div>
 </div>
 <div class="col-4">
     <div class="input-group mb-3">
         <span class="input-group-text" id="spCasal">Casal</span>
-        <input readonly id="inputCasal" type="text" class="form-control" placeholder="Qtd. camas casal" aria-label="Espaco" aria-describedby="spCasal">
+        <input readonly id="inputCasal" type="text" class="form-control" placeholder="Qtd. camas casal"
+               aria-label="Espaco" aria-describedby="spCasal">
     </div>
 </div>
 <div class="col-4"></div>
@@ -59,7 +64,8 @@
 <div class="col-4">
     <div class="input-group mb-3">
         <span class="input-group-text" id="spBanheiros">Banheiros</span>
-        <input readonly id="inputBanheiros" type="text" class="form-control" placeholder="Qtd. banheiros" aria-label="Espaco" aria-describedby="spBanheiros">
+        <input readonly id="inputBanheiros" type="text" class="form-control" placeholder="Qtd. banheiros"
+               aria-label="Espaco" aria-describedby="spBanheiros">
     </div>
 </div>
 <div class="col-8">
@@ -68,5 +74,24 @@
         <label class="form-check-label" for="inputCloset">
             Possui Closet
         </label>
+    </div>
+</div>
+<hr>
+<div class="col-12">
+    <label class="form-label">Finalizar Locação</label>
+</div>
+<div class="col-6">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="spDias">Dias de Estadia</span>
+        <input readonly id="inputDias" type="text" class="form-control" placeholder="Qtd. Dias" aria-label="Dias"
+               th:value="${qtdDias}"
+               aria-describedby="spDias">
+    </div>
+</div>
+<div class="col-6">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="spTotal">Preço Total (R$)</span>
+        <input readonly id="inputTotal" type="text" class="form-control" placeholder="Preço Total" aria-label="Total"
+               aria-describedby="spDias">
     </div>
 </div>

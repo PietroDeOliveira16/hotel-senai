@@ -16,61 +16,79 @@ function logout(){
 }
 $("#btnLogout").click(logout);
 
-function atualizarCampos(select) {
-        var numeroQuarto = select.value;
-
-        if (numeroQuarto) {
-            // Fazendo a requisição AJAX para pegar as informações do quarto
-            $.ajax({
-                url: '/quarto/' + numeroQuarto, // URL que vai buscar as informações
-                method: 'GET',
-                success: function(quarto) {
-                    // Preenchendo os campos de acordo com a resposta da API
-                    document.getElementById('inputTipo').value = quarto.tipo;
-                    document.getElementById('inputEspaco').value = quarto.espaco_pessoas;
-                    document.getElementById('inputPreco').value = quarto.preco;
-                    document.getElementById('inputSolteiro').value = quarto.camas_solteiro;
-                    document.getElementById('inputCasal').value = quarto.camas_casal;
-                    document.getElementById('inputBanheiros').value = quarto.banheiros;
-                    document.getElementById('inputCloset').checked = quarto.closet;
-                },
-                error: function() {
-                    document.getElementById('inputTipo').value = null;
-                    document.getElementById('inputEspaco').value = null;
-                    document.getElementById('inputPreco').value = null;
-                    document.getElementById('inputSolteiro').value = null;
-                    document.getElementById('inputCasal').value = null;
-                    document.getElementById('inputBanheiros').value = null;
-                    document.getElementById('inputCloset').checked = false;
-                }
-            });
-        }
-}
-
-function adicionarSelecaoQuartos(){
-    $(".row .campo").remove();
+function locacoesEmCurso(callback) {
     $.ajax({
-        url: '/buscarQuartos',
-        method: 'POST',
-        data:{
-            checkIn: $("#checkIn").val(),
-            checkOut: $("#checkOut").val()
+    url: '/addLocacoesAtivas', // Substitua pelo URL do seu servidor ou endpoint
+    method: 'POST',
+        success: function(response) {
+            $(".container .curso").append(response);
+            if(callback){
+                callback();
+            }
         },
-        success: function(response){
-            let div = $(response).addClass('campo');
-            $(".row").append(div);
-        },
-        error: function(){
+        error: function(error) {
             console.log("Erro: ", error);
         }
-    })
+    });
 }
-$("#btnSelecQuartos").click(adicionarSelecaoQuartos);
 
-$('.datepicker').datepicker({
-    autoclose: true,
-    startDate: 'd'
+function locacoesPassadas(callback) {
+    $.ajax({
+    url: '/addLocacoesPassadas', // Substitua pelo URL do seu servidor ou endpoint
+    method: 'POST',
+        success: function(response) {
+            $(".container .passadas").append(response);
+            if(callback){
+                callback();
+            }
+        },
+        error: function(error) {
+            console.log("Erro: ", error);
+        }
+    });
+}
+
+function locacoesReservadas(callback) {
+    $.ajax({
+    url: '/addLocacoesReservadas', // Substitua pelo URL do seu servidor ou endpoint
+    method: 'POST',
+        success: function(response) {
+            $(".container .reservas").append(response);
+            if(callback){
+                callback();
+            }
+        },
+        error: function(error) {
+            console.log("Erro: ", error);
+        }
+    });
+}
+
+window.onload = function() {
+    locacoesEmCurso(function() {  // Após a primeira requisição ser concluída
+        locacoesPassadas(function() {  // Após a segunda requisição ser concluída
+            locacoesReservadas();  // Após a terceira requisição ser concluída
+        });
+    });
+}
+
+/*
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
 });
+Toast.fire({
+  icon: "success",
+  title: "Signed in successfully"
+});
+*/
 
 
 

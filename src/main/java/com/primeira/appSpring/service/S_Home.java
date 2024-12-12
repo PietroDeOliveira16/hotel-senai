@@ -22,8 +22,16 @@ public class S_Home {
         return r_usuario.findAll();
     }
 
-    public static List<M_Locacao> getLocacoes(Long id_usuario) {
-        return r_locacao.findByUserId(id_usuario);
+    public static List<M_Locacao> getLocacoesAtivas(Long id_usuario) {
+        return r_locacao.findActiveLocacaoByUserId(id_usuario);
+    }
+
+    public static List<M_Locacao> getLocacoesPassadas(Long id_usuario){
+        return r_locacao.findPastLocacaoByUserId(id_usuario);
+    }
+
+    public static List<M_Locacao> getReservas(Long id_usuario){
+        return r_locacao.findReservasByUserId(id_usuario);
     }
 
 }

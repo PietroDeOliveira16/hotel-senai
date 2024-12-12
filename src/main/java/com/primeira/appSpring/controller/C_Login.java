@@ -25,7 +25,7 @@ public class C_Login {
     @GetMapping("/")
     public String getLogin(HttpSession session, Model model) {
         if (session.getAttribute("usuario") != null) {
-            model.addAttribute("locacoes", S_Home.getLocacoes(((M_Usuario) session.getAttribute("usuario")).getId()));
+            model.addAttribute("locacoes", S_Home.getLocacoesAtivas(((M_Usuario) session.getAttribute("usuario")).getId()));
             return "home/home";
         }
         return "index";
