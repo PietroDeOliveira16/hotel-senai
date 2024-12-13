@@ -54,8 +54,6 @@ public class C_Locacao {
         LocalDateTime checkIn = data_checkIn.atTime(12, 0);
         LocalDateTime checkOut = data_checkOut.atTime(10, 0);
 
-        long quantidadeDias = ChronoUnit.DAYS.between(data_checkIn, data_checkOut);
-
         LocalDate hoje = LocalDate.now();
 
         M_Usuario m_usuario = (M_Usuario) session.getAttribute("usuario");
@@ -64,7 +62,7 @@ public class C_Locacao {
         model.addAttribute("tomorrowDate", hoje.plusDays(1));
         if (m_usuario != null) {
             M_Resposta m_respostaLocacao = S_Locacao.realizarLocacao(numero_quarto, checkIn, checkOut,
-                    m_usuario.getId(), m_quarto.getId(), quantidadeDias);
+                    m_usuario, m_quarto);
             if(m_respostaLocacao.isSucesso()){
                 model.addAttribute("num_quarto", m_respostaLocacao.getM_locacao().getNum_quarto());
                 model.addAttribute("email_user", ((M_Usuario) session.getAttribute("usuario")).getEmail());

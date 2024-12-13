@@ -23,11 +23,10 @@
         }
 
         .container2{
+            overflow-y: visible; /* Permite rolar verticalmente quando o conteúdo for grande */
             max-height: 80vh; /* Defina a altura máxima para a div com locações */
             max-width: 100vw;
-            overflow-y: auto; /* Permite rolar verticalmente quando o conteúdo for grande */
             overflow-x: hidden;
-            padding: 10px;
         }
 
         .container2 p:not(:last-child) {
@@ -102,25 +101,94 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="p-2">
     <h2 class="text-center">Minhas Locações</h2>
     <div class="row">
         <div class="col-4" id="realizadas">
-            <h4 class="text-center">Realizadas <i class="fa-solid fa-square-check" style="color: #63E6BE;"></i></h4>
+            <h4 class="text-center ">Realizadas <i class="fa-solid fa-square-check" style="color: #63E6BE;"></i></h4>
             <div class="container2 p-2 passadas">
-
+                <div class="row mb-4" th:each="locacao : ${passadas}">
+                    <div class="col-1"></div>
+                    <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
+                        <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
+                        <div class="row gx-1">
+                            <div class="col-12">
+                                <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">Preço Total: R$<span class="fw-normal" th:text="${#numbers.formatDecimal(locacao.diaria * locacao.diasEstadia, 2, 2)}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">In: <span class="fw-normal" th:text="${#temporals.format(locacao.checkIn, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                            <div class="col-7">
+                                <p class="fs-6 fw-semibold">Out: <span class="fw-normal" th:text="${#temporals.format(locacao.checkOut, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
             </div>
         </div>
         <div class="col-4" id="emCurso">
-            <h4 class="text-center">Em Curso <i class="fa-solid fa-hourglass-half"></i></h4>
+            <h4 class="text-center ">Em Curso <i class="fa-solid fa-hourglass-half"></i></h4>
             <div class="container2 p-2 curso">
-
+                <div class="row mb-4" th:each="locacao : ${ativas}">
+                    <div class="col-1"></div>
+                    <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
+                        <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
+                        <div class="row gx-1">
+                            <div class="col-12">
+                                <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">Preço Total: R$<span class="fw-normal" th:text="${#numbers.formatDecimal(locacao.diaria * locacao.diasEstadia, 2, 2)}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">In: <span class="fw-normal" th:text="${#temporals.format(locacao.checkIn, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                            <div class="col-7">
+                                <p class="fs-6 fw-semibold">Out: <span class="fw-normal" th:text="${#temporals.format(locacao.checkOut, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
             </div>
         </div>
         <div class="col-4" id="reservas">
             <h4 class="text-center">Reservas <i class="fa-solid fa-calendar-day" style="color: #3a74d9;"></i></h4>
             <div class="container2 p-2 reservas">
-
+                <div class="row mb-4" th:each="locacao : ${futuras}">
+                    <div class="col-1"></div>
+                    <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
+                        <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
+                        <div class="row gx-1">
+                            <div class="col-12">
+                                <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">Preço Total: R$<span class="fw-normal" th:text="${#numbers.formatDecimal(locacao.diaria * locacao.diasEstadia, 2, 2)}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="fs-6 fw-semibold">In: <span class="fw-normal" th:text="${#temporals.format(locacao.checkIn, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                            <div class="col-7">
+                                <p class="fs-6 fw-semibold">Out: <span class="fw-normal" th:text="${#temporals.format(locacao.checkOut, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
             </div>
         </div>
     </div>

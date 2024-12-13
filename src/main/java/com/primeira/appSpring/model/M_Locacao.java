@@ -15,12 +15,16 @@ public class M_Locacao {
     private LocalDateTime check_in;
     private LocalDateTime check_out;
     private int senha;
-    private long id_quarto;
     private int num_quarto;
-    private long id_usuario;
     private BigDecimal diaria;
-    private long dias_estadia;
-    private BigDecimal preco_total;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private M_Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_quarto", nullable = false)
+    private M_Quarto quarto;
 
     public long getId() {
         return id;
@@ -54,28 +58,12 @@ public class M_Locacao {
         this.senha = senha;
     }
 
-    public long getId_quarto() {
-        return id_quarto;
-    }
-
-    public void setId_quarto(long id_quarto) {
-        this.id_quarto = id_quarto;
-    }
-
     public int getNum_quarto() {
         return num_quarto;
     }
 
     public void setNum_quarto(int num_quarto) {
         this.num_quarto = num_quarto;
-    }
-
-    public long getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(long id_usuario) {
-        this.id_usuario = id_usuario;
     }
 
     public BigDecimal getDiaria() {
@@ -86,19 +74,19 @@ public class M_Locacao {
         this.diaria = diaria;
     }
 
-    public long getDias_estadia() {
-        return dias_estadia;
+    public M_Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setDias_estadia(long dias_estadia) {
-        this.dias_estadia = dias_estadia;
+    public void setUsuario(M_Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public BigDecimal getPreco_total() {
-        return preco_total;
+    public M_Quarto getQuarto() {
+        return quarto;
     }
 
-    public void setPreco_total(BigDecimal preco_total) {
-        this.preco_total = preco_total;
+    public void setQuarto(M_Quarto quarto) {
+        this.quarto = quarto;
     }
 }

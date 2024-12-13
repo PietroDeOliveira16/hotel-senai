@@ -3,6 +3,7 @@ package com.primeira.appSpring.service;
 import com.primeira.appSpring.model.M_Locacao;
 import com.primeira.appSpring.model.M_Quarto;
 import com.primeira.appSpring.model.M_Resposta;
+import com.primeira.appSpring.model.M_Usuario;
 import com.primeira.appSpring.repository.R_Locacao;
 import com.primeira.appSpring.repository.R_Quarto;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class S_Locacao {
     }
 
     public static M_Resposta realizarLocacao(int numero_quarto, LocalDateTime data_checkIn,
-                                             LocalDateTime data_checkOut, long id_usuario, long id_quarto, long dias) {
+                                             LocalDateTime data_checkOut, M_Usuario usuario, M_Quarto quarto) {
         M_Resposta m_resposta = new M_Resposta();
 
         boolean podeLocar = true;
@@ -45,17 +46,17 @@ public class S_Locacao {
             podeLocar = false;
             m_resposta.setMensagem("Data de check-out inválida, a data de check-out deve ser após a data de check-in.");
         }
-        if (id_usuario <= 0) {
+        if (usuario == null) {
             podeLocar = false;
             m_resposta.setMensagem("Nenhum usuário foi encontrado nesta sessão, por favor entre na sua conta.");
         }
-        M_Locacao m_locacaoLocada = r_locacao.quartoEstaLocado(id_quarto, data_checkIn, data_checkOut);
+        M_Locacao m_locacaoLocada = r_locacao.quartoEstaLocado(quarto.getId(), data_checkIn, data_checkOut);
         if (m_locacaoLocada != null) {
             podeLocar = false;
             m_resposta.setMensagem("Já existe uma locação na data inserida, por favor selecione datas diferentes.");
         }
 
-        M_Quarto m_quarto = r_quarto.findById(id_quarto).orElse(null);
+        M_Quarto m_quarto = r_quarto.findById(quarto.getId()).orElse(null);
         if (m_quarto == null) {
             podeLocar = false;
             m_resposta.setMensagem("Quarto selecionado já está locado, por favor selecione outro quarto.");
@@ -66,7 +67,7 @@ public class S_Locacao {
         if (podeLocar) {
             try {
                 M_Locacao m_locacao = new M_Locacao();
-                m_locacao.setId_usuario(id_usuario);
+                m_locacao.setUsuario(usuario);
                 m_locacao.setNum_quarto(numero_quarto);
                 m_locacao.setCheck_in(data_checkIn);
                 m_locacao.setCheck_out(data_checkOut);
@@ -83,17 +84,11 @@ public class S_Locacao {
                 }
 
                 m_locacao.setSenha(senha);
-                m_locacao.setId_quarto(id_quarto);
+                m_locacao.setQuarto(quarto);
 
                 // Preço quarto normal = R$60,00
                 // Preço quarto luxo = R$179,90
                 m_locacao.setDiaria(r_quarto.findByNumero(numero_quarto).getPreco());
-
-                m_locacao.setDias_estadia(dias);
-
-                BigDecimal qtdDias = BigDecimal.valueOf(dias);
-
-                m_locacao.setPreco_total(qtdDias.multiply(m_locacao.getDiaria()));
 
                 r_locacao.save(m_locacao);
                 m_resposta.setM_locacao(m_locacao);
@@ -112,6 +107,6 @@ public class S_Locacao {
     }
 
     public static List<M_Quarto> getQuartosDisponiveis(LocalDateTime dataCheckIn, LocalDateTime dataCheckOut) {
-        return r_quarto.findQuartosDisponiveis(dataCheckIn, dataCheckOut);
+        return r_quarto.findQuartosDisponiveis(dataCheckIn.withHour(12), dataCheckOut.withHour(10));
     }
 }
