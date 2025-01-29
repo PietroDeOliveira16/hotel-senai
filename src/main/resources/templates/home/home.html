@@ -141,8 +141,11 @@
                     <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
                         <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
                         <div class="row gx-1">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
+                            </div>
+                            <div class="col-6">
+                                <button th:data-id="${locacao.id}" onclick="consumos(this)" type="button" class="mb-2 fs-6 fw-semibold btn btn-success"><i class="fa-solid fa-plus"></i> Consumos</button>
                             </div>
                             <div class="col-6">
                                 <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>

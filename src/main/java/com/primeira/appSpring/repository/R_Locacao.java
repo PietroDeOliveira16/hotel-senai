@@ -85,5 +85,4 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
             "where l.id_usuario = :id_usuario and " +
             "NOW() > l.check_out;", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesPassadas(@Param("id_usuario") Long id_usuario);
-    
 }
