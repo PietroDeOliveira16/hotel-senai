@@ -19,5 +19,53 @@ public class M_ConsumoLocacao {
     private M_Locacao locacao;
     private int quantidade;
     private BigDecimal preco;
-    private LocalDateTime data_consumo;
+    private LocalDateTime data;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public M_Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(M_Produto produto) {
+        this.produto = produto;
+    }
+
+    public M_Locacao getLocacao() {
+        return locacao;
+    }
+
+    public void setLocacao(M_Locacao locacao) {
+        this.locacao = locacao;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
 }

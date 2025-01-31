@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public interface M_ViewLocacao {
+    long getId();
     String getNumeroQuarto();
     BigDecimal getDiaria();
     Integer getSenha();

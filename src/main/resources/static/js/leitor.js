@@ -40,8 +40,30 @@ function lerProduto(){
 	});
 }
 
-function insereProduto(codigo){
-	$("#codBarras").val(codigo);
+function insereProduto(code){
+    $.ajax({
+       url: '/rest/produto',
+       method: 'GET',
+       data:{
+            codigo: code
+       },
+       success: function(produto){
+            document.getElementById('nomeProduto').value = produto.nome;
+            const precoFormatado = new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                                minimumFractionDigits: 2, // Garante sempre 2 casas decimais
+                                maximumFractionDigits: 2  // Limita para 2 casas decimais
+                            }).format(produto.preco);
+            document.getElementById('valorProduto').textContent = precoFormatado;
+            document.getElementById('valorTotal').textContent = precoFormatado;
+            document.getElementById('inputQuantidade').value = 1;
+            $("#codBarras").val(code);
+       },
+       error: function(){
+            console.log('fodeu');
+       }
+    });
 }
 
 function mostrarProduto(inputElement) {
@@ -61,7 +83,6 @@ function mostrarProduto(inputElement) {
     if (produtoSelecionado) {
                 // Atualizar os campos com as informações do produto encontrado
         document.getElementById('codBarras').value = produtoSelecionado.cod_barras;
-        document.getElementById('descProduto').textContent = produtoSelecionado.nome;
 
         const precoFormatado = new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
@@ -72,50 +93,111 @@ function mostrarProduto(inputElement) {
 
 
         document.getElementById('valorProduto').textContent = precoFormatado;
+        document.getElementById('valorTotal').textContent = precoFormatado;
+        document.getElementById('inputQuantidade').value = 1;
+
     } else {
                 // Caso o produto não seja encontrado
         document.getElementById('codBarras').value = '';
-        document.getElementById('descProduto').textContent = 'Produto não encontrado';
+        document.getElementById('nomeProduto').value = '';
+        document.getElementById('inputQuantidade').value = 1;
         document.getElementById('valorProduto').textContent = '---';
+        document.getElementById('valorTotal').textContent = '---';
     }
 }
 
-$("[type='number']").keypress(function (evt) {
+/*$("[type='number']").keypress(function (evt) {
     evt.preventDefault();
-});
+});*/
 
 $("#btnRegistrar").click(registrarConsumo);
-
 function registrarConsumo(){
-    const nomeProduto = document.getElementById('nomeProduto').value;
+    var nomeProduto = document.getElementById('nomeProduto').value;
+    console.log("Nome do produto = " + nomeProduto);
 
     // Obtém o datalist associado ao input
-    const datalist = document.getElementById('produtos');
+    var datalist = document.getElementById('produtos');
+    console.log("datalist = " + datalist);
 
     // Encontra a opção no datalist correspondente ao nome do produto
-    const option = Array.from(datalist.options).find(option => option.value === nomeProduto);
+    var option = Array.from(datalist.options).find(option => option.value.trim().toLowerCase() === nomeProduto.trim().toLowerCase());
+
 
     if (option) {
+        console.log("opção escolhida = " + option);
         // Acessa o atributo data-id da opção selecionada
-        const produtoId = option.getAttribute('data-id');
-        const produtoPreco = option.getAttribute('data-preco');
+        var produtoId = option.getAttribute('data-id');
+        console.log("id produto = " + produtoId);
+        var produtoPreco = option.getAttribute('data-preco');
+        console.log("preco = " + produtoPreco);
+    }else{
+        console.log("opção não encontrada");
     }
 
-    const quantidade = document.getElementById('inputQuantidade').value;
+    var qtd = document.getElementById('inputQuantidade').value;
+
+    var locacaoId = document.getElementById("locacao").value;
 
     $.ajax({
         url: '/registrarConsumo',
         method: 'POST',
+        data:{
+            id_produto: produtoId,
+            id_locacao: locacaoId,
+            quantidade: qtd,
+            preco: produtoPreco
+        },
         success: function(response){
             if(response != null){
+                console.log(response);
+                document.getElementById("nomeProduto").value = '';
                 document.getElementById('codBarras').value = '';
-                document.getElementById('descProduto').textContent = 'Produto não encontrado';
                 document.getElementById('valorProduto').textContent = '---';
+                document.getElementById('valorTotal').textContent = '---';
+                document.getElementById('inputQuantidade').value = 1;
+                Swal.fire({
+                   title: "Registrado!",
+                   text: "Seu consumo foi registrado na sua locação e será cobrado ao fim de sua estadia, obrigado!",
+                   icon: "success",
+                   showConfirmButton: false,
+                   timer: 4500,
+                   timerProgressBar: true,
+                     didOpen: () => {
+                       Swal.showLoading();
+                       const timer = Swal.getPopup().querySelector("b");
+                       timerInterval = setInterval(() => {
+                         timer.textContent = `${Swal.getTimerLeft()}`;
+                       }, 100);
+                     },
+                     willClose: () => {
+                       clearInterval(timerInterval);
+                     }
+                   }).then((result) => {
+                     /* Read more about handling dismissals below */
+                     if (result.dismiss === Swal.DismissReason.timer) {}
+                });
             }
         },
         error: function(){
-            console.log('fodeu');
+            console.log('fudeu');
         }
-    })
+    });
+}
 
+function incrementarPrecoTotal(qtdInput){
+    var quantidade = qtdInput.value;
+
+    const nomeProduto = document.getElementById('nomeProduto').value.trim().toLowerCase();
+    const produtoSelecionado = produtosData.find(produto => produto.nome.toLowerCase() === nomeProduto);
+
+    var precoNormal = produtoSelecionado.preco;
+    var total = precoNormal * quantidade;
+
+    const precoFormatado = new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                        minimumFractionDigits: 2, // Garante sempre 2 casas decimais
+                        maximumFractionDigits: 2  // Limita para 2 casas decimais
+                    }).format(total);
+    document.getElementById('valorTotal').textContent = precoFormatado;
 }

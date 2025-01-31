@@ -14,6 +14,14 @@ public class M_Produto {
     private String nome;
     private BigDecimal preco;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getCod_barras() {
         return cod_barras;
     }

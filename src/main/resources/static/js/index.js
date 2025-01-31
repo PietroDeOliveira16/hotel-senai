@@ -16,19 +16,3 @@ function logout(){
 }
 $("#btnLogout").click(logout);
 
-function consumos(btnElement){
-    const idLocacaoAtual = btnElement.getAttribute('data-id');
-
-    $.ajax({
-        url: '/consumo',
-        method: 'GET',
-        data:{
-            id: idLocacaoAtual
-        },
-        success: function(){
-        },
-        error: function(){
-        }
-    });
-}
-

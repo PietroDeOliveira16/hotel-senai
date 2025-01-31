@@ -17,4 +17,8 @@ public class S_Produto {
     public static List<M_Produto> findAllProdutos(){
         return r_produto.findAll();
     }
+
+    public static M_Produto findByCode(String codigo){
+        return r_produto.findByCodeBar(codigo);
+    }
 }

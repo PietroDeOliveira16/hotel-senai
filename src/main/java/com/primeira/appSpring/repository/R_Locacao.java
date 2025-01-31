@@ -36,6 +36,7 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
                                @Param("check_out") LocalDateTime check_out);
 
     @Query(value = "select " +
+            "l.id, " +
             "q.numero_quarto, " +
             "l.diaria, " +
             "l.senha, " +
