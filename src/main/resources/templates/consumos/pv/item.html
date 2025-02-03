@@ -1,0 +1,13 @@
+<div class="row lista">
+    <div class="col-4 mt-1" style="border-bottom: 1px dashed black;">
+        <h6 th:text="${consumoItem.produto.nome}"></h6>
+        <h6>Preço Un.: R$<span th:text="${consumoItem.preco}"></span></h6>
+    </div>
+    <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
+        <h6>Quantidade: <span th:text="${consumoItem.quantidade}"></span></h6>
+        <h6>Total: R$<span th:text="${consumoItem.preco * consumoItem.quantidade}"></span></h6>
+    </div>
+    <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
+        <h6>Data: <span th:text="${#temporals.format(consumoItem.data, 'dd/MM/yyyy HH:mm')}"></span></h6>
+    </div>
+</div>

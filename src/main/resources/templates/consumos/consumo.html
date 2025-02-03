@@ -50,6 +50,10 @@
             border: 1px solid black;
             border-radius: 0.325rem;
         }
+        .consumos-container{
+            border: 1px solid black;
+            border-radius: 0.325rem;
+        }
         #leitor{
             border-left: 1px solid black;
         }
@@ -64,11 +68,12 @@
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         Hospedagem
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="/cadLocacao">Locações e Reservas</a></li>
+                        <li><a class="dropdown-item" href="/cadLocacao">Locações e Reservas</a></li>
                     </ul>
                 </li>
             </ul>
@@ -78,7 +83,7 @@
 </nav>
 
 <div class="container">
-    <div class="leitor-container row">
+    <div class="leitor-container row mb-4">
         <div class="col-12">
             <div class="row">
                 <div class="col-4" id="leitor">
@@ -103,7 +108,8 @@
                                aria-describedby="spNomeProduto"
                                list="produtos" onchange="mostrarProduto(this)">
                         <datalist id="produtos">
-                            <option th:each="produto : ${listaProdutos}" th:value="${produto.nome}" th:data-id="${produto.id}" th:data-preco="${produto.preco}">
+                            <option th:each="produto : ${listaProdutos}" th:value="${produto.nome}"
+                                    th:data-id="${produto.id}" th:data-preco="${produto.preco}">
                         </datalist>
                     </div>
                     <div id="fake" class="">
@@ -112,12 +118,56 @@
                         <div class="">
                             <label for="inputQuantidade" class="form-label"><b>Quantidade:</b></label>
                             <div class="input-group">
-                                <input onchange="incrementarPrecoTotal(this)" placeholder="1" type="number" min="1" class="form-control" id="inputQuantidade" aria-describedby="basic-addon3 basic-addon4">
+                                <input onchange="incrementarPrecoTotal(this)" placeholder="1" type="number" min="1"
+                                       class="form-control" id="inputQuantidade"
+                                       aria-describedby="basic-addon3 basic-addon4">
                             </div>
-                            <div class="form-text mb-1" id="basic-addon4">Quantidade obrigatória de 1 produto por registro.</div>
-                            <input id="locacao" type="hidden" th:value="${idLocacaoAtual}">
-                            <button id="btnRegistrar" type="button" class="btn btn-success mb-1">Registrar Consumo</button>
+                            <div class="form-text mb-1" id="basic-addon4">Quantidade mínima de 1 produto por
+                                registro.
+                            </div>
+                            <input id="locacao" type="hidden" th:value="${locacaoAtual.id}">
+                            <button id="btnRegistrar" type="button" class="btn btn-success mb-2">Registrar Consumo
+                            </button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="consumos-container row">
+        <div class="col-12">
+            <div class="row" style="overflow-y: auto;">
+                <div class="col-12 text-center">
+                    <p class="fs-2 fw-bold">Locação número <span th:text="${locacaoAtual.id}"></span></p>
+                </div>
+                <div class="col-4 text-center" style="border-bottom: 1px solid black;">
+                    <p class="fw-semibold">Quarto nº <span th:text="${locacaoAtual.num_quarto}"></span></p>
+                </div>
+                <div class="col-4 text-center" style="border-bottom: 1px solid black;">
+                    <p class="fw-semibold">Check-In: <span
+                            th:text="${#temporals.format(locacaoAtual.check_in, 'dd/MM/yyyy HH:mm')}"></span>
+                    </p>
+                </div>
+                <div class="col-4 text-center" style="border-bottom: 1px solid black;">
+                    <p class="fw-semibold">Check-Out: <span
+                            th:text="${#temporals.format(locacaoAtual.check_out, 'dd/MM/yyyy HH:mm')}"></span>
+                    </p>
+                </div>
+                <div id="lista-itens">
+                    <div class="row lista" th:each="consumo : ${listaConsumos}">
+                        <div class="col-4 mt-1" style="border-bottom: 1px dashed black;">
+                            <h6 th:text="${consumo.produto.nome}"></h6>
+                            <h6>Preço Un.: R$<span th:text="${consumo.preco}"></span></h6>
+                        </div>
+                        <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
+                            <h6>Quantidade: <span th:text="${consumo.quantidade}"></span></h6>
+                            <h6>Total: R$<span th:text="${consumo.preco * consumo.quantidade}"></span></h6>
+                        </div>
+                        <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
+                            <h6>Data: <span th:text="${#temporals.format(consumo.data, 'dd/MM/yyyy HH:mm')}"></span>
+                            </h6>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

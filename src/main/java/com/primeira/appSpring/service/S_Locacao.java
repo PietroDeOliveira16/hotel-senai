@@ -8,10 +8,10 @@ import com.primeira.appSpring.repository.R_Locacao;
 import com.primeira.appSpring.repository.R_Quarto;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -108,5 +108,9 @@ public class S_Locacao {
 
     public static List<M_Quarto> getQuartosDisponiveis(LocalDateTime dataCheckIn, LocalDateTime dataCheckOut) {
         return r_quarto.findQuartosDisponiveis(dataCheckIn.withHour(12), dataCheckOut.withHour(10));
+    }
+
+    public static Optional<M_Locacao> getLocacaoId(long id){
+        return r_locacao.findById(id);
     }
 }

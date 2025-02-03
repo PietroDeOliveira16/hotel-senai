@@ -149,6 +149,7 @@ function registrarConsumo(){
         },
         success: function(response){
             if(response != null){
+                $("#lista-itens").prepend(response);
                 console.log(response);
                 document.getElementById("nomeProduto").value = '';
                 document.getElementById('codBarras').value = '';
