@@ -2,17 +2,15 @@ package com.primeira.appSpring.service;
 
 import com.primeira.appSpring.model.M_Usuario;
 import com.primeira.appSpring.repository.R_Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class S_Cadastro {
-    private static R_Usuario r_usuario;
+    @Autowired
+    private R_Usuario r_usuario;
 
-    public S_Cadastro(R_Usuario r_usuario) {
-        this.r_usuario = r_usuario;
-    }
-
-    public static M_Usuario cadastrarUsuario(String usuario, String apelido, String senha, String conf_senha,
+    public M_Usuario cadastrarUsuario(String usuario, String apelido, String senha, String conf_senha,
                                              String telefone, String cpf, String email) {
         boolean podeSalvar = true;
 

@@ -4,6 +4,7 @@ import com.primeira.appSpring.model.*;
 import com.primeira.appSpring.repository.R_ConsumoLocacao;
 import com.primeira.appSpring.repository.R_Locacao;
 import com.primeira.appSpring.repository.R_Produto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,17 +15,14 @@ import java.util.Optional;
 
 @Service
 public class S_Consumo {
-    private static R_ConsumoLocacao r_consumo;
-    private static R_Produto r_produto;
-    private static R_Locacao r_locacao;
+    @Autowired
+    private R_ConsumoLocacao r_consumo;
+    @Autowired
+    private R_Produto r_produto;
+    @Autowired
+    private R_Locacao r_locacao;
 
-    public S_Consumo(R_ConsumoLocacao r_consumo, R_Produto r_produto, R_Locacao r_locacao) {
-        this.r_consumo = r_consumo;
-        this.r_produto = r_produto;
-        this.r_locacao = r_locacao;
-    }
-
-    public static M_ConsumoLocacao registrarConsumo(long id_produto, long id_locacao, int quantidade, BigDecimal preco) {
+    public M_ConsumoLocacao registrarConsumo(long id_produto, long id_locacao, int quantidade, BigDecimal preco) {
         boolean podeRegistrar = true;
 
         if (id_produto < 1) {
@@ -60,7 +58,7 @@ public class S_Consumo {
         }
     }
 
-    public static List<M_ConsumoLocacao> getListaConsumosLocacao(long idLocacao) {
+    public List<M_ConsumoLocacao> getListaConsumosLocacao(long idLocacao) {
         return r_consumo.findConsumoLocacao(idLocacao);
     }
 }

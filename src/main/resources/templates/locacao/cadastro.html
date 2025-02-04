@@ -19,26 +19,8 @@
     <title>Hoteis SENAI</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Hospedagem
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#">Locações e Reservas</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <a class="btn btn-danger" id="btnLogout">Logout</a>
-        </div>
-    </div>
-</nav>
+<div th:insert="nav/navbar"></div>
+
 <div class="container">
     <p class="fs-4">Observações</p>
     <p class="fs-5 text-break">O check-in só é permitido a partir do meio dia (12:00). O check-out deve ser feito até as dez da manhã (10:00). </p>

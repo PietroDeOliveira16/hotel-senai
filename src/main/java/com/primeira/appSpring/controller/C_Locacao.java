@@ -25,6 +25,11 @@ import javax.swing.text.DateFormatter;
 
 @Controller
 public class C_Locacao {
+    private final S_Locacao s_locacao;
+
+    public C_Locacao(S_Locacao s_locacao) {
+        this.s_locacao = s_locacao;
+    }
 
     @GetMapping("/cadLocacao")
     public String getLocacao(HttpSession session, Model model) {
@@ -41,7 +46,7 @@ public class C_Locacao {
     @GetMapping("/quarto/{numero}")
     @ResponseBody
     public M_Quarto getQuartoInfo(@PathVariable int numero) {
-        M_Quarto quarto = S_Locacao.acharQuarto(numero); // Obtém o quarto com o número passado na URL
+        M_Quarto quarto = s_locacao.acharQuarto(numero); // Obtém o quarto com o número passado na URL
         return quarto; // Retorna o objeto Quarto em formato JSON
     }
 
@@ -57,11 +62,11 @@ public class C_Locacao {
         LocalDate hoje = LocalDate.now();
 
         M_Usuario m_usuario = (M_Usuario) session.getAttribute("usuario");
-        M_Quarto m_quarto = S_Locacao.acharQuarto(numero_quarto);
+        M_Quarto m_quarto = s_locacao.acharQuarto(numero_quarto);
         model.addAttribute("currentDate", hoje);
         model.addAttribute("tomorrowDate", hoje.plusDays(1));
         if (m_usuario != null) {
-            M_Resposta m_respostaLocacao = S_Locacao.realizarLocacao(numero_quarto, checkIn, checkOut,
+            M_Resposta m_respostaLocacao = s_locacao.realizarLocacao(numero_quarto, checkIn, checkOut,
                     m_usuario, m_quarto);
             if(m_respostaLocacao.isSucesso()){
                 model.addAttribute("num_quarto", m_respostaLocacao.getM_locacao().getNum_quarto());
@@ -95,7 +100,7 @@ public class C_Locacao {
 
         long quantidadeDias = ChronoUnit.DAYS.between(dateCheckIn, dateCheckOut);
 
-        List<M_Quarto> quartos = S_Locacao.getQuartosDisponiveis(checkIn, checkOut);
+        List<M_Quarto> quartos = s_locacao.getQuartosDisponiveis(checkIn, checkOut);
         model.addAttribute("quartos", quartos);
         model.addAttribute("qtdDias", quantidadeDias);
         return "/locacao/pv/quarto";

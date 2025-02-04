@@ -10,9 +10,15 @@ import java.math.BigDecimal;
 
 @RestController
 public class ProdutoRestController {
+    private final S_Produto s_produto;
+
+    public ProdutoRestController(S_Produto s_produto) {
+        this.s_produto = s_produto;
+    }
+
     @GetMapping("/rest/produto")
     public M_Produto getProduto(@RequestParam("codigo") String codigo){
-        M_Produto baseProduto = S_Produto.findByCode(codigo);
+        M_Produto baseProduto = s_produto.findByCode(codigo);
         M_Produto produto = new M_Produto();
         produto.setId(baseProduto.getId());
         produto.setNome(baseProduto.getNome());

@@ -16,11 +16,19 @@ import java.util.List;
 
 @Controller
 public class C_Login {
+    private final S_Home s_home;
+    private final S_Login s_login;
+
+    public C_Login(S_Home s_home, S_Login s_login) {
+        this.s_home = s_home;
+        this.s_login = s_login;
+    }
+
     @PostMapping("/")
     public String postLogin(@RequestParam("usuario") String usuario,
                             @RequestParam("senha") String senha,
                             HttpSession session) {
-        M_Usuario m_usuario = S_Login.validaLogin(usuario, senha);
+        M_Usuario m_usuario = s_login.validaLogin(usuario, senha);
         session.setAttribute("usuario", m_usuario);
         return "redirect:/";
     }
@@ -29,9 +37,9 @@ public class C_Login {
     public String getLogin(HttpSession session, Model model) {
         if (session.getAttribute("usuario") != null) {
             long id = ((M_Usuario) session.getAttribute("usuario")).getId();
-            List<M_ViewLocacao> ativas = S_Home.getLocacoesAtivas(id);
-            List<M_ViewLocacao> passadas = S_Home.getLocacoesPassadas(id);
-            List<M_ViewLocacao> futuras = S_Home.getLocacoesFuturas(id);
+            List<M_ViewLocacao> ativas = s_home.getLocacoesAtivas(id);
+            List<M_ViewLocacao> passadas = s_home.getLocacoesPassadas(id);
+            List<M_ViewLocacao> futuras = s_home.getLocacoesFuturas(id);
 
             if(ativas.isEmpty() && passadas.isEmpty() && futuras.isEmpty()){
                 return "home/noLocacoes";

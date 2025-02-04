@@ -10,6 +10,7 @@ import java.io.OutputStream;
 public class ArduinoSerialCommunication {
 
     private SerialPort serialPort;
+    private C_ValidaSenha c_validaSenha;
 
     public static void main(String[] args) {
         ArduinoSerialCommunication arduino = new ArduinoSerialCommunication();
@@ -50,7 +51,7 @@ public class ArduinoSerialCommunication {
                 if (input.ready()) {
                     String inputLine = input.readLine();
                     System.out.println("Dados recebidos: " + inputLine);
-                    String outputString = C_ValidaSenha.ChecarSenha(inputLine);
+                    String outputString = c_validaSenha.ChecarSenha(inputLine);
                     if(!outputString.isEmpty()) {
                         output.write(outputString.getBytes());
                     }

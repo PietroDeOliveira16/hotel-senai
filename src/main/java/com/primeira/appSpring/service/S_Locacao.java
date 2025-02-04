@@ -6,6 +6,7 @@ import com.primeira.appSpring.model.M_Resposta;
 import com.primeira.appSpring.model.M_Usuario;
 import com.primeira.appSpring.repository.R_Locacao;
 import com.primeira.appSpring.repository.R_Quarto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,19 +17,16 @@ import java.util.Random;
 
 @Service
 public class S_Locacao {
-    private static R_Quarto r_quarto;
-    private static R_Locacao r_locacao;
+    @Autowired
+    private R_Quarto r_quarto;
+    @Autowired
+    private R_Locacao r_locacao;
 
-    public S_Locacao(R_Quarto r_quarto, R_Locacao r_locacao) {
-        this.r_quarto = r_quarto;
-        this.r_locacao = r_locacao;
-    }
-
-    public static M_Quarto acharQuarto(int numero) {
+    public M_Quarto acharQuarto(int numero) {
         return r_quarto.findByNumero(numero);
     }
 
-    public static M_Resposta realizarLocacao(int numero_quarto, LocalDateTime data_checkIn,
+    public M_Resposta realizarLocacao(int numero_quarto, LocalDateTime data_checkIn,
                                              LocalDateTime data_checkOut, M_Usuario usuario, M_Quarto quarto) {
         M_Resposta m_resposta = new M_Resposta();
 
@@ -101,16 +99,16 @@ public class S_Locacao {
         return m_resposta;
     }
 
-    private static boolean isSenhaRepetida(int senha, LocalDateTime check_in, LocalDateTime check_out) {
+    private boolean isSenhaRepetida(int senha, LocalDateTime check_in, LocalDateTime check_out) {
         return r_locacao.findIfSenhaRepetida(senha, check_in, check_out).isPresent(); // verifica se o objeto retornado possui campos preenchidos (a senha ja
         // existe em algum lugar) ou se o objeto esta null (a senha n existe)
     }
 
-    public static List<M_Quarto> getQuartosDisponiveis(LocalDateTime dataCheckIn, LocalDateTime dataCheckOut) {
+    public List<M_Quarto> getQuartosDisponiveis(LocalDateTime dataCheckIn, LocalDateTime dataCheckOut) {
         return r_quarto.findQuartosDisponiveis(dataCheckIn.withHour(12), dataCheckOut.withHour(10));
     }
 
-    public static Optional<M_Locacao> getLocacaoId(long id){
+    public Optional<M_Locacao> getLocacaoId(long id){
         return r_locacao.findById(id);
     }
 }
