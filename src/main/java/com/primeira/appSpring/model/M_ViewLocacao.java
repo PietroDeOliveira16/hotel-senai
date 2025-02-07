@@ -11,4 +11,5 @@ public interface M_ViewLocacao {
     LocalDateTime getCheckIn();
     LocalDateTime getCheckOut();
     Integer getDiasEstadia();
+    Double getTotalConsumo();
 }

@@ -109,6 +109,18 @@
                             <div class="col-7">
                                 <p class="fs-6 fw-semibold">Out: <span class="fw-normal" th:text="${#temporals.format(locacao.checkOut, 'dd/MM/yyyy HH:mm')}"></span></p>
                             </div>
+                            <div class="col-md-6">
+                                <span><b>Valor Consumos</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span><b>Valor Total</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span th:text="${#numbers.formatCurrency(locacao.totalConsumo)}"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span th:text="${#numbers.formatCurrency(locacao.preco * locacao.diarias + locacao.totalConsumo)}"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-1"></div>

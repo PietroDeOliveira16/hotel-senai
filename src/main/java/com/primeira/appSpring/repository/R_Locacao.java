@@ -45,12 +45,17 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
             "case cast(l.check_out as date) - cast(l.check_in as date) when 0 " +
             "then 1 " +
             "else cast(l.check_out as date) - cast(l.check_in as date) " +
-            "end as dias_estadia  " +
+            "end as dias_estadia, " +
+            "COALESCE(sum(c.preco * c.quantidade), 0) as total_consumo " +
             "from hotel.locacao l " +
             "join hotel.quartos q " +
             "on l.id_quarto = q.id " +
+            "left join hotel.consumo_locacao c " +
+            "on l.id = c.id_locacao " +
             "where l.id_usuario = :id_usuario and " +
-            "NOW() between l.check_in and l.check_out;", nativeQuery = true)
+            "NOW() between l.check_in and l.check_out " +
+            "GROUP BY 1,2,3,4,5,6,7 " +
+            "ORDER BY 1;", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesEmCurso(@Param("id_usuario") Long id_usuario);
 
     @Query(value = "select " +
@@ -62,12 +67,17 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
             "case cast(l.check_out as date) - cast(l.check_in as date) when 0 " +
             "then 1 " +
             "else cast(l.check_out as date) - cast(l.check_in as date) " +
-            "end as dias_estadia  " +
+            "end as dias_estadia, " +
+            "COALESCE(sum(c.preco * c.quantidade), 0) as total_consumo " +
             "from hotel.locacao l " +
             "join hotel.quartos q " +
             "on l.id_quarto = q.id " +
+            "left join hotel.consumo_locacao c " +
+            "on l.id = c.id_locacao " +
             "where l.id_usuario = :id_usuario and " +
-            "NOW() < l.check_in;", nativeQuery = true)
+            "NOW() < l.check_in " +
+            "GROUP BY 1,2,3,4,5,6,7 " +
+            "ORDER BY 1;", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesFuturas(@Param("id_usuario") Long id_usuario);
 
     @Query(value = "select " +
@@ -79,11 +89,16 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
             "case cast(l.check_out as date) - cast(l.check_in as date) when 0 " +
             "then 1 " +
             "else cast(l.check_out as date) - cast(l.check_in as date) " +
-            "end as dias_estadia  " +
+            "end as dias_estadia,  " +
+            "COALESCE(sum(c.preco * c.quantidade), 0) as total_consumo " +
             "from hotel.locacao l " +
             "join hotel.quartos q " +
             "on l.id_quarto = q.id " +
+            "left join hotel.consumo_locacao c " +
+            "on l.id = c.id_locacao " +
             "where l.id_usuario = :id_usuario and " +
-            "NOW() > l.check_out;", nativeQuery = true)
+            "NOW() > l.check_out " +
+            "GROUP BY 1,2,3,4,5,6,7 " +
+            "ORDER BY 1;", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesPassadas(@Param("id_usuario") Long id_usuario);
 }
