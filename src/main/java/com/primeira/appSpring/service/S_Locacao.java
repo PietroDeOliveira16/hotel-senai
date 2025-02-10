@@ -89,6 +89,8 @@ public class S_Locacao {
                 m_locacao.setDiaria(r_quarto.findByNumero(numero_quarto).getPreco());
 
                 r_locacao.save(m_locacao);
+
+                // if(data_checkIn.equals(LocalDateTime.now()) && LocalDateTime.now().getHour() > 12)
                 m_resposta.setM_locacao(m_locacao);
                 return m_resposta;
             } catch (Exception e) {

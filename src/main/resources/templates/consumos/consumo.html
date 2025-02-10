@@ -137,11 +137,11 @@
                     <div class="row lista" th:each="consumo : ${listaConsumos}">
                         <div class="col-4 mt-1" style="border-bottom: 1px dashed black;">
                             <h6 th:text="${consumo.produto.nome}"></h6>
-                            <h6>Preço Un.: R$<span th:text="${consumo.preco}"></span></h6>
+                            <h6>Preço Un.: <span th:text="${#numbers.formatCurrency(consumo.preco)}"></span></h6>
                         </div>
                         <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
                             <h6>Quantidade: <span th:text="${consumo.quantidade}"></span></h6>
-                            <h6>Total: R$<span th:text="${consumo.preco * consumo.quantidade}"></span></h6>
+                            <h6>Total: <span th:text="${#numbers.formatCurrency(consumo.preco * consumo.quantidade)}"></span></h6>
                         </div>
                         <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
                             <h6>Data: <span th:text="${#temporals.format(consumo.data, 'dd/MM/yyyy HH:mm')}"></span>

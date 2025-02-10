@@ -92,8 +92,12 @@
                 <div class="row mb-4" th:each="locacao : ${passadas}">
                     <div class="col-1"></div>
                     <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
-                        <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
-                        <div class="row gx-1">
+                        <div class="row" style="border-bottom: 2px solid black;">
+                            <div class="col-6 mt-2">
+                                <h5 class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></h5>
+                            </div>
+                        </div>
+                        <div class="row gx-1 mt-1">
                             <div class="col-12">
                                 <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
                             </div>
@@ -101,7 +105,7 @@
                                 <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>
                             </div>
                             <div class="col-6">
-                                <p class="fs-6 fw-semibold">Preço Total: R$<span class="fw-normal" th:text="${#numbers.formatDecimal(locacao.diaria * locacao.diasEstadia, 2, 2)}"></span></p>
+                                <p class="fs-6 fw-semibold">Valor Diária: <span class="fw-normal" th:text="${#numbers.formatCurrency(locacao.diaria)}"></span></p>
                             </div>
                             <div class="col-6">
                                 <p class="fs-6 fw-semibold">In: <span class="fw-normal" th:text="${#temporals.format(locacao.checkIn, 'dd/MM/yyyy HH:mm')}"></span></p>
@@ -119,7 +123,7 @@
                                 <span th:text="${#numbers.formatCurrency(locacao.totalConsumo)}"></span>
                             </div>
                             <div class="col-md-6">
-                                <span th:text="${#numbers.formatCurrency(locacao.preco * locacao.diarias + locacao.totalConsumo)}"></span>
+                                <span th:text="${#numbers.formatCurrency(locacao.diaria * locacao.diasEstadia + locacao.totalConsumo)}"></span>
                             </div>
                         </div>
                     </div>
@@ -133,25 +137,45 @@
                 <div class="row mb-4" th:each="locacao : ${ativas}">
                     <div class="col-1"></div>
                     <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
-                        <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
-                        <div class="row gx-1">
-                            <div class="col-6">
-                                <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
+                        <div class="row" style="border-bottom: 2px solid black;">
+                            <div class="col-6 mt-2">
+                                <h5 class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></h5>
                             </div>
-                            <div class="col-6">
-                                <a id="btnConsumo" th:href="@{/consumo/{id}(id=${locacao.id})}" type="submit" class="ms-5 mb-2 fs-6 fw-semibold btn btn-success"><i class="fa-solid fa-plus"></i> Consumos</a>
+                            <div class="col-6 mt-2">
+                                <h5 class="fs-6 fw-semibold">
+                                    <a id="btnConsumo" th:href="@{/consumo/{id}(id=${locacao.id})}" type="submit" class="ms-5 mb-2 fs-6 fw-semibold btn btn-success">
+                                        <i class="fa-solid fa-plus"></i> Consumos
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="row gx-1 mt-1">
+                            <div class="col-7">
+                                <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
                             </div>
                             <div class="col-6">
                                 <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>
                             </div>
                             <div class="col-6">
-                                <p class="fs-6 fw-semibold">Preço Total: R$<span class="fw-normal" th:text="${#numbers.formatDecimal(locacao.diaria * locacao.diasEstadia, 2, 2)}"></span></p>
+                                <p class="fs-6 fw-semibold">Valor Diária: <span class="fw-normal" th:text="${#numbers.formatCurrency(locacao.diaria)}"></span></p>
                             </div>
                             <div class="col-6">
                                 <p class="fs-6 fw-semibold">In: <span class="fw-normal" th:text="${#temporals.format(locacao.checkIn, 'dd/MM/yyyy HH:mm')}"></span></p>
                             </div>
                             <div class="col-7">
                                 <p class="fs-6 fw-semibold">Out: <span class="fw-normal" th:text="${#temporals.format(locacao.checkOut, 'dd/MM/yyyy HH:mm')}"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <span><b>Valor Consumos</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span><b>Valor Total</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span th:text="${#numbers.formatCurrency(locacao.totalConsumo)}"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span th:text="${#numbers.formatCurrency(locacao.diaria * locacao.diasEstadia + locacao.totalConsumo)}"></span>
                             </div>
                         </div>
                     </div>
@@ -174,7 +198,7 @@
                                 <p class="fs-6 fw-semibold">Diárias: <span th:text="${locacao.diasEstadia}"></span> dia(s)</p>
                             </div>
                             <div class="col-6">
-                                <p class="fs-6 fw-semibold">Preço Total: R$<span class="fw-normal" th:text="${#numbers.formatDecimal(locacao.diaria * locacao.diasEstadia, 2, 2)}"></span></p>
+                                <p class="fs-6 fw-semibold">Valor Diária: <span class="fw-normal" th:text="${#numbers.formatCurrency(locacao.diaria)}"></span></p>
                             </div>
                             <div class="col-6">
                                 <p class="fs-6 fw-semibold">In: <span class="fw-normal" th:text="${#temporals.format(locacao.checkIn, 'dd/MM/yyyy HH:mm')}"></span></p>

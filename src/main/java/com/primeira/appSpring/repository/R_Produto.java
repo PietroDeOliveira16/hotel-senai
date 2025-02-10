@@ -6,8 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface R_Produto extends JpaRepository<M_Produto, Long> {
     @Query(value = "select * from hotel.produto where cod_barras = :cod_barras", nativeQuery = true)
     M_Produto findByCodeBar(@Param("cod_barras") String codigo);
+
+    @Query(value = "select * from hotel.produto where id != 9;", nativeQuery = true)
+    List<M_Produto> findAllProdutos();
 }

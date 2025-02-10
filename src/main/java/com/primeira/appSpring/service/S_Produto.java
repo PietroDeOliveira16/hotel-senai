@@ -13,7 +13,7 @@ public class S_Produto {
     private R_Produto r_produto;
 
     public List<M_Produto> findAllProdutos(){
-        return r_produto.findAll();
+        return r_produto.findAllProdutos();
     }
 
     public M_Produto findByCode(String codigo){

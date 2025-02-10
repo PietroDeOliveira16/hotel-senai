@@ -35,70 +35,90 @@ public interface R_Locacao extends JpaRepository<M_Locacao, Long> {
                                @Param("check_in") LocalDateTime check_in,
                                @Param("check_out") LocalDateTime check_out);
 
-    @Query(value = "select " +
-            "l.id, " +
-            "q.numero_quarto, " +
-            "l.diaria, " +
-            "l.senha, " +
-            "l.check_in, " +
-            "l.check_out," +
-            "case cast(l.check_out as date) - cast(l.check_in as date) when 0 " +
-            "then 1 " +
-            "else cast(l.check_out as date) - cast(l.check_in as date) " +
-            "end as dias_estadia, " +
-            "COALESCE(sum(c.preco * c.quantidade), 0) as total_consumo " +
-            "from hotel.locacao l " +
-            "join hotel.quartos q " +
-            "on l.id_quarto = q.id " +
-            "left join hotel.consumo_locacao c " +
-            "on l.id = c.id_locacao " +
-            "where l.id_usuario = :id_usuario and " +
-            "NOW() between l.check_in and l.check_out " +
-            "GROUP BY 1,2,3,4,5,6,7 " +
-            "ORDER BY 1;", nativeQuery = true)
+    @Query(value = "SELECT \n" +
+            "    l.id, \n" +
+            "    q.numero_quarto, \n" +
+            "    l.diaria, \n" +
+            "    l.senha, \n" +
+            "    l.check_in, \n" +
+            "    l.check_out,\n" +
+            "    CASE \n" +
+            "        WHEN CAST(l.check_out AS DATE) - CAST(l.check_in AS DATE) = 0 THEN 1 \n" +
+            "        ELSE CAST(l.check_out AS DATE) - CAST(l.check_in AS DATE) \n" +
+            "    END AS dias_estadia,  \n" +
+            "    COALESCE(SUM(c.preco * c.quantidade), 0) AS total_consumo\n" +
+            "FROM hotel.locacao l\n" +
+            "JOIN hotel.quartos q \n" +
+            "    ON l.id_quarto = q.id\n" +
+            "LEFT JOIN hotel.consumo_locacao c \n" +
+            "    ON l.id = c.id_locacao\n" +
+            "AND c.id_locacao not in(9) \n" +
+            "WHERE l.id_usuario = :id_usuario\n" +
+            "    AND NOW() BETWEEN l.check_in AND l.check_out\n" +
+            "GROUP BY \n" +
+            "    l.id, \n" +
+            "    q.numero_quarto, \n" +
+            "    l.diaria, \n" +
+            "    l.senha, \n" +
+            "    l.check_in, \n" +
+            "    l.check_out\n" +
+            "ORDER BY l.id;\n", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesEmCurso(@Param("id_usuario") Long id_usuario);
 
-    @Query(value = "select " +
-            "q.numero_quarto, " +
-            "l.diaria, " +
-            "l.senha, " +
-            "l.check_in, " +
-            "l.check_out," +
-            "case cast(l.check_out as date) - cast(l.check_in as date) when 0 " +
-            "then 1 " +
-            "else cast(l.check_out as date) - cast(l.check_in as date) " +
-            "end as dias_estadia, " +
-            "COALESCE(sum(c.preco * c.quantidade), 0) as total_consumo " +
-            "from hotel.locacao l " +
-            "join hotel.quartos q " +
-            "on l.id_quarto = q.id " +
-            "left join hotel.consumo_locacao c " +
-            "on l.id = c.id_locacao " +
-            "where l.id_usuario = :id_usuario and " +
-            "NOW() < l.check_in " +
-            "GROUP BY 1,2,3,4,5,6,7 " +
-            "ORDER BY 1;", nativeQuery = true)
+    @Query(value = "SELECT \n" +
+            "    q.numero_quarto, \n" +
+            "    l.diaria, \n" +
+            "    l.senha, \n" +
+            "    l.check_in, \n" +
+            "    l.check_out,\n" +
+            "    CASE \n" +
+            "        WHEN CAST(l.check_out AS DATE) - CAST(l.check_in AS DATE) = 0 THEN 1 \n" +
+            "        ELSE CAST(l.check_out AS DATE) - CAST(l.check_in AS DATE) \n" +
+            "    END AS dias_estadia,  \n" +
+            "    COALESCE(SUM(c.preco * c.quantidade), 0) AS total_consumo\n" +
+            "FROM hotel.locacao l\n" +
+            "JOIN hotel.quartos q \n" +
+            "    ON l.id_quarto = q.id\n" +
+            "LEFT JOIN hotel.consumo_locacao c \n" +
+            "    ON l.id = c.id_locacao\n" +
+            "AND c.id_locacao not in(9) \n" +
+            "WHERE l.id_usuario = :id_usuario\n" +
+            "    AND NOW() < l.check_in\n" +
+            "GROUP BY \n" +
+            "    q.numero_quarto, \n" +
+            "    l.diaria, \n" +
+            "    l.senha, \n" +
+            "    l.check_in, \n" +
+            "    l.check_out\n" +
+            "ORDER BY q.numero_quarto;\n", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesFuturas(@Param("id_usuario") Long id_usuario);
 
-    @Query(value = "select " +
-            "q.numero_quarto, " +
-            "l.diaria, " +
-            "l.senha, " +
-            "l.check_in, " +
-            "l.check_out," +
-            "case cast(l.check_out as date) - cast(l.check_in as date) when 0 " +
-            "then 1 " +
-            "else cast(l.check_out as date) - cast(l.check_in as date) " +
-            "end as dias_estadia,  " +
-            "COALESCE(sum(c.preco * c.quantidade), 0) as total_consumo " +
-            "from hotel.locacao l " +
-            "join hotel.quartos q " +
-            "on l.id_quarto = q.id " +
-            "left join hotel.consumo_locacao c " +
-            "on l.id = c.id_locacao " +
-            "where l.id_usuario = :id_usuario and " +
-            "NOW() > l.check_out " +
-            "GROUP BY 1,2,3,4,5,6,7 " +
-            "ORDER BY 1;", nativeQuery = true)
+    @Query(value = "SELECT q.numero_quarto, \n" +
+            "       l.diaria, \n" +
+            "       l.senha, \n" +
+            "       l.check_in, \n" +
+            "       l.check_out,\n" +
+            "       CASE \n" +
+            "           WHEN CAST(l.check_out AS DATE) - CAST(l.check_in AS DATE) = 0 THEN 1 \n" +
+            "           ELSE CAST(l.check_out AS DATE) - CAST(l.check_in AS DATE) \n" +
+            "       END AS dias_estadia,  \n" +
+            "       COALESCE(SUM(c.preco * c.quantidade), 0) AS total_consumo\n" +
+            "FROM hotel.locacao l\n" +
+            "JOIN hotel.quartos q ON l.id_quarto = q.id\n" +
+            "LEFT JOIN hotel.consumo_locacao c ON l.id = c.id_locacao\n" +
+            "AND c.id_locacao not in(9) \n" +
+            "WHERE l.id_usuario = ? \n" +
+            "  AND NOW() > l.check_out\n" +
+            "GROUP BY q.numero_quarto, \n" +
+            "         l.diaria, \n" +
+            "         l.senha, \n" +
+            "         l.check_in, \n" +
+            "         l.check_out\n" +
+            "ORDER BY q.numero_quarto;\n", nativeQuery = true)
     List<M_ViewLocacao> getLocacoesPassadas(@Param("id_usuario") Long id_usuario);
+
+    @Query(value = "select * from hotel.locacao\n" +
+            "where (cast(check_out as date) > now() or cast(check_out as date) = cast(check_in as date))\n" +
+            "and now() between check_in and check_out;", nativeQuery = true)
+    List<M_Locacao> getLocacoesGerarDiarias();
 }
