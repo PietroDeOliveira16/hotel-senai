@@ -12,4 +12,6 @@ public interface M_ViewLocacao {
     LocalDateTime getCheckOut();
     Integer getDiasEstadia();
     Double getTotalConsumo();
+    Boolean getNoShow();
+    Boolean getIsChecked();
 }

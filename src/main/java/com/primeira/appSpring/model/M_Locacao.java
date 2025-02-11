@@ -26,6 +26,12 @@ public class M_Locacao {
     @JoinColumn(name = "id_quarto", nullable = false)
     private M_Quarto quarto;
 
+    @Column(name = "is_checked", nullable = false)
+    private Boolean is_checked = Boolean.FALSE;
+
+    @Column(name = "no_show", nullable = false)
+    private Boolean no_show = Boolean.FALSE;
+
     public long getId() {
         return id;
     }
@@ -88,5 +94,21 @@ public class M_Locacao {
 
     public void setQuarto(M_Quarto quarto) {
         this.quarto = quarto;
+    }
+
+    public Boolean getChecked() {
+        return is_checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        is_checked = checked;
+    }
+
+    public Boolean getNo_show() {
+        return no_show;
+    }
+
+    public void setNo_show(Boolean no_show) {
+        this.no_show = no_show;
     }
 }

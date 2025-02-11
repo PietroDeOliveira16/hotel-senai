@@ -1,21 +1,26 @@
 package com.primeira.appSpring.program;
-import com.primeira.appSpring.controller.C_ValidaSenha;
 import com.fazecast.jSerialComm.*;
+import com.primeira.appSpring.repository.R_Locacao;
+import com.primeira.appSpring.service.S_ValidaSenha;
+import jakarta.websocket.server.ServerApplicationConfig;
+import org.apache.catalina.core.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
+import javax.security.auth.login.AppConfigurationEntry;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+@Component
 public class ArduinoSerialCommunication {
 
     private SerialPort serialPort;
-    private C_ValidaSenha c_validaSenha;
 
-    public static void main(String[] args) {
-        ArduinoSerialCommunication arduino = new ArduinoSerialCommunication();
-        arduino.initialize();
-    }
+    @Autowired
+    private S_ValidaSenha s_validaSenha;
 
     public void initialize() {
         SerialPort[] ports = SerialPort.getCommPorts();
@@ -51,8 +56,8 @@ public class ArduinoSerialCommunication {
                 if (input.ready()) {
                     String inputLine = input.readLine();
                     System.out.println("Dados recebidos: " + inputLine);
-                    String outputString = c_validaSenha.ChecarSenha(inputLine);
-                    if(!outputString.isEmpty()) {
+                    String outputString = s_validaSenha.ValidarSenha(inputLine).trim();
+                    if(!outputString.isEmpty()){
                         output.write(outputString.getBytes());
                     }
                     output.flush();
