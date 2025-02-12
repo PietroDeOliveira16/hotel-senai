@@ -23,7 +23,7 @@ public class S_Diarias {
     @Autowired
     private R_ConsumoLocacao r_consumoLocacao;
 
-    @Scheduled(cron = "0 0 10 * * ?")
+    @Scheduled(cron = "0 0 9 * * ?")
     public void gerarDiarias() {
         List<M_Locacao> locacoes = r_locacao.getLocacoesGerarDiarias();
         M_Produto diaria = r_produto.getReferenceById(9L);

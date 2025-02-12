@@ -162,7 +162,7 @@
                                 <h5 class="fs-5 text-center fw-bold">Quarto <span
                                         th:text="${locacao.numeroQuarto}"></span></h5>
                             </div>
-                            <div class="col-6 mt-2">
+                            <div th:if="${locacao.isChecked}" class="col-6 mt-2">
                                 <h5 class="fs-6 fw-semibold">
                                     <a id="btnConsumo" th:href="@{/consumo/{id}(id=${locacao.id})}" type="submit"
                                        class="ms-5 mb-2 fs-6 fw-semibold btn btn-success">
@@ -172,7 +172,7 @@
                             </div>
                         </div>
                         <div class="row gx-1 mt-1">
-                            <div class="col-3">
+                            <div class="col-7">
                                 <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
                             </div>
                             <div th:if="${locacao.isChecked}" class="col-4">
@@ -221,8 +221,12 @@
                 <div class="row mb-4" th:each="locacao : ${futuras}">
                     <div class="col-1"></div>
                     <div class="col-10" style="border: 2px solid black; border-radius: 15px;">
-                        <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
-                        <div class="row gx-1">
+                        <div class="row" style="border-bottom: 2px solid black;">
+                            <div class="col-12 mt-2">
+                                <p class="fs-5 text-center fw-bold">Quarto <span th:text="${locacao.numeroQuarto}"></span></p>
+                            </div>
+                        </div>
+                        <div class="row gx-1 mt-1">
                             <div class="col-12">
                                 <p class="fs-6 fw-semibold">Senha: <span th:text="${locacao.senha}"></span></p>
                             </div>
