@@ -103,10 +103,10 @@
                                 <h5 class="fs-5 text-center fw-bold">Quarto <span
                                         th:text="${locacao.numeroQuarto}"></span></h5>
                             </div>
-                            <div th:if="${locacao.noShow}" class="col-6 mt-2">
+                            <div th:if="${locacao.noShow || !locacao.isChecked}" class="col-6 mt-2">
                                 <span class="badge text-bg-danger"><i class="fa-solid fa-xmark"></i> Não Apareceu</span>
                             </div>
-                            <div th:unless="${locacao.noShow}" class="col-6 mt-2">
+                            <div th:if="${locacao.isChecked}" class="col-6 mt-2">
                                 <span class="badge text-bg-success"><i class="fa-solid fa-check fa-xs"></i> Realizada com sucesso</span>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public interface M_ViewLocacao {
     long getId();
+    Long getIdUsuario();
     String getNumeroQuarto();
     BigDecimal getDiaria();
     Integer getSenha();

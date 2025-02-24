@@ -69,6 +69,7 @@ public class C_Locacao {
             M_Resposta m_respostaLocacao = s_locacao.realizarLocacao(numero_quarto, checkIn, checkOut,
                     m_usuario, m_quarto);
             if(m_respostaLocacao.isSucesso()){
+                model.addAttribute("check_in_date", m_respostaLocacao.getM_locacao().getCheck_in());
                 model.addAttribute("num_quarto", m_respostaLocacao.getM_locacao().getNum_quarto());
                 model.addAttribute("email_user", ((M_Usuario) session.getAttribute("usuario")).getEmail());
                 return "locacao/sucesso";

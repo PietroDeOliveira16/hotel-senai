@@ -32,6 +32,9 @@ public class M_Locacao {
     @Column(name = "no_show", nullable = false)
     private Boolean no_show = Boolean.FALSE;
 
+    @Column(name = "recebeu_ficha", nullable = false)
+    private Boolean recebeu_ficha = Boolean.FALSE;
+
     public long getId() {
         return id;
     }
@@ -110,5 +113,13 @@ public class M_Locacao {
 
     public void setNo_show(Boolean no_show) {
         this.no_show = no_show;
+    }
+
+    public Boolean getRecebeu_ficha() {
+        return recebeu_ficha;
+    }
+
+    public void setRecebeu_ficha(Boolean recebeu_ficha) {
+        this.recebeu_ficha = recebeu_ficha;
     }
 }
