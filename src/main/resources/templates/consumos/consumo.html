@@ -88,7 +88,7 @@
                                aria-describedby="spNomeProduto"
                                list="produtos" onchange="mostrarProduto(this)">
                         <datalist id="produtos">
-                            <option th:each="produto : ${listaProdutos}" th:value="${produto.nome}"
+                            <option th:each="produto : ${listaProdutos}" th:value="${produto.produto}"
                                     th:data-id="${produto.id}" th:data-preco="${produto.preco}">
                         </datalist>
                     </div>
@@ -136,7 +136,7 @@
                 <div id="lista-itens">
                     <div class="row lista" th:each="consumo : ${listaConsumos}">
                         <div class="col-4 mt-1" style="border-bottom: 1px dashed black;">
-                            <h6 th:text="${consumo.produto.nome}"></h6>
+                            <h6 th:text="${consumo.produto.produto}"></h6>
                             <h6>Preço Un.: <span th:text="${#numbers.formatCurrency(consumo.preco)}"></span></h6>
                         </div>
                         <div class="col-4 mt-1 text-center" style="border-bottom: 1px dashed black;">
