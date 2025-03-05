@@ -8,6 +8,6 @@ public interface M_ApiJson {
     Long getQuantidade();
     int getMin();
     int getMax();
-    BigDecimal getCusto_Medio();
-    LocalDate getUltima_Compra();
+    BigDecimal getCusto_medio();
+    LocalDate getUltima_compra();
 }
