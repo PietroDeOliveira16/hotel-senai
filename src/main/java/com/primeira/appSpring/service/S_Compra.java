@@ -15,8 +15,6 @@ public class S_Compra {
 
     public List<M_ApiJson> gerarResponse(String data){
         LocalDate date = LocalDate.parse(data);
-        List<M_ApiJson> estoqueDoDia = r_produto.findEstoqueOfData(date);
-
-        return estoqueDoDia;
+        return r_produto.findEstoqueOfData(date);
     }
 }
