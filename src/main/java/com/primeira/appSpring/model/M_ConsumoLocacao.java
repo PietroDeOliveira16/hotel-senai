@@ -14,6 +14,7 @@ public class M_ConsumoLocacao {
     @ManyToOne
     @JoinColumn(name = "id_produto", nullable = false)
     private M_Produto produto;
+    private String cod_barras;
     @ManyToOne
     @JoinColumn(name = "id_locacao", nullable = false)
     private M_Locacao locacao;
@@ -35,6 +36,14 @@ public class M_ConsumoLocacao {
 
     public void setProduto(M_Produto produto) {
         this.produto = produto;
+    }
+
+    public String getCod_barras() {
+        return cod_barras;
+    }
+
+    public void setCod_barras(String cod_barras) {
+        this.cod_barras = cod_barras;
     }
 
     public M_Locacao getLocacao() {
